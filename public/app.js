@@ -172,6 +172,7 @@
   let currentQuiz = null;
   let previousFocus = null;
   const exerciseCache = new Map();
+  let exerciseCatalogPromise = null;
 
   function defaultState() {
     return {
@@ -504,6 +505,25 @@
     } else feedbackNode.textContent = '';
   }
 
+  async function getExerciseCatalog() {
+    if (!exerciseCatalogPromise) {
+      exerciseCatalogPromise = fetch('/exercises.json')
+        .then((response) => {
+          if (!response.ok) throw new Error('Không thể tải bài tập.');
+          return response.json();
+        })
+        .then((catalog) => {
+          if (!Array.isArray(catalog)) throw new Error('Không thể tải bài tập.');
+          return catalog;
+        })
+        .catch(() => {
+          exerciseCatalogPromise = null;
+          throw new Error('Không thể tải bài tập.');
+        });
+    }
+    return exerciseCatalogPromise;
+  }
+
   async function loadExercises(reset = false) {
     if (reset) {
       exercisePage = 1;
@@ -518,26 +538,42 @@
     list.classList.add('is-loading');
     resultsCount.textContent = 'Đang tải bài tập...';
 
-    const params = new URLSearchParams({ page: String(exercisePage), limit: String(PAGE_SIZE) });
-    if (exerciseLevel) params.set('level', String(exerciseLevel));
-    if (exerciseQuery) params.set('q', exerciseQuery);
     try {
-      const response = await fetch(`/api/exercises?${params.toString()}`);
-      if (!response.ok) throw new Error('Không thể tải bài tập.');
-      const data = await response.json();
+      const catalog = await getExerciseCatalog();
+      const query = exerciseQuery.trim().toLocaleLowerCase('vi');
+      const filtered = catalog.filter((exercise) => {
+        const matchesLevel = !exerciseLevel || exercise.level === exerciseLevel;
+        const searchableText = [
+          exercise.title,
+          exercise.titleMarkdown,
+          exercise.promptMarkdown,
+          exercise.solutionMarkdown,
+        ].join('\n').toLocaleLowerCase('vi');
+        return matchesLevel && (!query || searchableText.includes(query));
+      });
+      const total = filtered.length;
+      const pages = Math.ceil(total / PAGE_SIZE);
+      const results = filtered.slice((exercisePage - 1) * PAGE_SIZE, exercisePage * PAGE_SIZE).map((exercise) => ({
+        id: exercise.id,
+        title: exercise.title,
+        level: exercise.level,
+        levelLabel: exercise.levelLabel,
+        shortLevelLabel: exercise.shortLevelLabel,
+        hasSolution: Boolean(exercise.solutionMarkdown),
+      }));
       if (requestId !== exerciseRequestId) return;
-      exercisePages = data.pages;
-      exerciseResults = exercisePage === 1 ? data.results : [...exerciseResults, ...data.results];
+      exercisePages = pages;
+      exerciseResults = exercisePage === 1 ? results : [...exerciseResults, ...results];
       renderExerciseRows();
-      resultsCount.textContent = data.total === 0
+      resultsCount.textContent = total === 0
         ? '0 bài tập phù hợp'
-        : `Hiển thị ${exerciseResults.length} / ${data.total} bài tập`;
-      if (loadMore) loadMore.hidden = data.pages <= exercisePage;
+        : `Hiển thị ${exerciseResults.length} / ${total} bài tập`;
+      if (loadMore) loadMore.hidden = pages <= exercisePage;
       const hint = document.getElementById('paginationHint');
-      if (hint) hint.textContent = data.total ? `${data.total} bài · ${data.pages} trang nội dung` : '';
-      if (empty) empty.hidden = data.results.length > 0 || exercisePage > 1;
+      if (hint) hint.textContent = total ? `${total} bài · ${pages} trang nội dung` : '';
+      if (empty) empty.hidden = results.length > 0 || exercisePage > 1;
       const totalLabel = document.getElementById('practiceTotalLabel');
-      if (totalLabel) totalLabel.textContent = `${data.total} bài tập phù hợp`;
+      if (totalLabel) totalLabel.textContent = `${total} bài tập phù hợp`;
     } catch (error) {
       if (requestId !== exerciseRequestId) return;
       resultsCount.textContent = 'Chưa thể tải bài tập';
@@ -563,11 +599,12 @@
   }
 
   async function fetchExercise(id) {
-    if (exerciseCache.has(Number(id))) return exerciseCache.get(Number(id));
-    const response = await fetch(`/api/exercises/${encodeURIComponent(id)}`);
-    if (!response.ok) throw new Error('Không tìm thấy bài tập này.');
-    const exercise = await response.json();
-    exerciseCache.set(Number(id), exercise);
+    const numericId = Number(id);
+    if (exerciseCache.has(numericId)) return exerciseCache.get(numericId);
+    const catalog = await getExerciseCatalog();
+    const exercise = catalog.find((item) => item.id === numericId);
+    if (!exercise) throw new Error('Không tìm thấy bài tập này.');
+    exerciseCache.set(numericId, exercise);
     return exercise;
   }
 
