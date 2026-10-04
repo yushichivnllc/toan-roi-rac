@@ -3,19 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#073bff">
+  <meta name="theme-color" content="#050a3a">
   <meta name="description" content="Không gian ôn luyện Toán rời rạc: ô-tô-mát, văn phạm, biểu thức chính quy và 200 bài tập có lời giải.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any">
   <title>Rời Rạc — Không gian ôn luyện Toán rời rạc</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/electric.css">
+  <link rel="stylesheet" href="/theme.css">
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
   <a class="skip-link" href="#pageContent">Đến nội dung chính</a>
+
+  <div class="canvas-fx" aria-hidden="true">
+    <span class="fx-aurora"></span>
+    <span class="fx-grid"></span>
+    <span class="fx-pointer" id="fxPointer"></span>
+    <span class="fx-grain"></span>
+  </div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"><span></span></div>
+
   <div class="app-shell" id="appShell">
     <aside class="sidebar" id="sidebar" aria-label="Điều hướng chính">
       <div class="brand-row">
@@ -27,7 +37,7 @@
               <path d="M29 11.5h.01M10.5 29h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
             </svg>
           </span>
-          <span class="brand-copy"><strong>rời rạc</strong><small>DISCRETE / STUDIO</small></span>
+          <span class="brand-copy"><strong>rời rạc</strong><small>ELECTRIC STUDY STUDIO</small></span>
         </a>
         <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-label="Thu gọn thanh điều hướng" title="Thu gọn menu">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>
@@ -84,6 +94,10 @@
           <span class="topbar-current" id="topbarCurrent">Tổng quan</span>
         </div>
         <div class="topbar-actions">
+          <span class="topbar-chip" title="Số bài bạn đã đánh dấu ôn tập">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.2"/><path d="m6.8 10.2 2.2 2.2 4.4-4.6"/></svg>
+            <b id="topbarSolvedCount">0</b><i>/200</i>
+          </span>
           <button class="search-trigger" type="button" id="openSearch" aria-label="Tìm bài tập">
             <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.8" cy="8.8" r="5.5"/><path d="m13 13 4 4"/></svg>
             <span>Tìm nhanh bài tập...</span><kbd>⌘ K</kbd>
@@ -97,44 +111,77 @@
 
       <div class="page-content" id="pageContent" tabindex="-1">
         <section class="view-panel is-visible" id="overview" data-view-panel="overview">
-          <div class="edition-line" data-animate><span>RỜI RẠC® — KHÔNG GIAN HỌC TẬP</span><span>VOL. 03 / HỌC KHÔNG GIỚI HẠN ↗</span></div>
+          <div class="edition-line" data-animate>
+            <span id="todayLabel">RỜI RẠC® — KHÔNG GIAN HỌC TẬP</span>
+            <span>VOL. 03 / HỌC KHÔNG GIỚI HẠN ↗</span>
+          </div>
+
           <section class="hero-card" data-animate aria-labelledby="heroTitle">
-            <img class="electric-art" src="/assets/electric-ribbons.svg" alt="" aria-hidden="true">
+            <img class="electric-art" src="/assets/electric-orbit.svg" alt="" aria-hidden="true">
+            <span class="hero-halo" aria-hidden="true"></span>
+            <span class="hero-gridline" aria-hidden="true"></span>
+
             <div class="hero-copy">
               <div class="hero-kicker"><span class="hero-kicker-dot"></span>TOÁN RỜI RẠC <span class="hero-kicker-line"></span> CHƯƠNG 03</div>
               <h1 id="heroTitle">MỞ KHÓA<br><em>TƯ DUY.</em><span class="hero-star" aria-hidden="true">✳</span></h1>
               <p class="hero-manifesto">HIỂU SÂU HƠN.<br>ĐI XA HƠN MỖI NGÀY.</p>
-              <p>Ô-tô-mát &amp; Ngôn ngữ hình thức.<br>200 bài tập có lời giải. Một hành trình của riêng bạn.</p>
+              <p class="hero-lede">Ô-tô-mát &amp; Ngôn ngữ hình thức.<br>200 bài tập có lời giải. Một hành trình của riêng bạn.</p>
               <div class="hero-cta-row">
                 <button class="button button-lime" type="button" id="continueLearning">Bắt đầu ôn tập <span aria-hidden="true">↗</span></button>
                 <button class="hero-secondary" type="button" data-view-target="roadmap">Khám phá lộ trình <span aria-hidden="true">↗</span></button>
               </div>
+              <ul class="hero-badges">
+                <li><b>200</b><span>bài có lời giải</span></li>
+                <li><b>07</b><span>ngày lộ trình</span></li>
+                <li><b>05</b><span>mức luyện tập</span></li>
+              </ul>
             </div>
+
+            <aside class="hero-panel" aria-label="Tiến độ học tập">
+              <div class="hero-panel-head">
+                <span class="hero-panel-dot"></span>
+                <span>TIẾN ĐỘ CỦA BẠN</span>
+              </div>
+              <div class="hero-panel-value"><strong id="heroProgressValue">0%</strong><span id="heroProgressCount">0/200 bài</span></div>
+              <div class="hero-panel-track"><span id="heroProgressBar"></span></div>
+              <p class="hero-panel-hint" id="heroProgressHint">Mở một bài tập và đánh dấu “đã ôn” để bắt đầu vẽ tiến độ.</p>
+              <div class="hero-panel-foot">
+                <span class="hero-panel-tag">Σ* / δ / q₀</span>
+                <button class="hero-panel-link" type="button" data-view-target="progress">Xem chi tiết <span aria-hidden="true">↗</span></button>
+              </div>
+            </aside>
+
             <div class="poster-coordinate" aria-hidden="true">Σ* / δ / q₀<br>KNOWLEDGE IS THE KEY.<br>21° 01′ N — 105° 51′ E</div>
             <div class="poster-bottom"><span>01 — HIỂU SÂU · NHỚ LÂU · LÀM ĐƯỢC</span><span>SCROLL TO EXPLORE ↓</span></div>
           </section>
-          <div class="ticker" aria-hidden="true"><span>THINK BEYOND</span><b>✳</b><span>PHÁ VỠ GIỚI HẠN</span><b>✳</b><span>LEARN. SOLVE. REPEAT.</span><b>✳</b><span>THINK BEYOND</span></div>
+
+          <div class="ticker" aria-hidden="true">
+            <div class="ticker-track">
+              <span class="ticker-group"><span>THINK BEYOND</span><b>✳</b><span>PHÁ VỠ GIỚI HẠN</span><b>✳</b><span>LEARN. SOLVE. REPEAT.</span><b>✳</b><span>Σ · δ · q₀ · PDA</span><b>✳</b></span>
+              <span class="ticker-group"><span>THINK BEYOND</span><b>✳</b><span>PHÁ VỠ GIỚI HẠN</span><b>✳</b><span>LEARN. SOLVE. REPEAT.</span><b>✳</b><span>Σ · δ · q₀ · PDA</span><b>✳</b></span>
+            </div>
+          </div>
 
           <section class="metric-grid" aria-label="Tổng quan tài liệu">
-            <article class="metric-card" data-animate>
+            <article class="metric-card" data-animate data-reveal>
               <div class="metric-icon icon-mint"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5 4.5h12M5 8.5h12M5 12.5h7M5 16.5h8"/><path d="M3 2.5h16v17H3z"/></svg></div>
-              <div class="metric-content"><span>THƯ VIỆN BÀI TẬP</span><strong>200 <small>bài có lời giải</small></strong><p>Từ nhập môn đến cực khó</p></div>
+              <div class="metric-content"><span>THƯ VIỆN BÀI TẬP</span><strong data-count-to="200">200 <small>bài có lời giải</small></strong><p>Từ nhập môn đến cực khó</p></div>
               <span class="metric-corner" aria-hidden="true">↗</span>
             </article>
-            <article class="metric-card" data-animate>
+            <article class="metric-card" data-animate data-reveal>
               <div class="metric-icon icon-peach"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M11 6.5v4.8l3.3 2"/></svg></div>
-              <div class="metric-content"><span>LỘ TRÌNH GỢI Ý</span><strong>07 <small>ngày ôn tập</small></strong><p>Mỗi ngày 2–3 giờ tập trung</p></div>
+              <div class="metric-content"><span>LỘ TRÌNH GỢI Ý</span><strong data-count-to="7">07 <small>ngày ôn tập</small></strong><p>Mỗi ngày 2–3 giờ tập trung</p></div>
               <span class="metric-corner" aria-hidden="true">↗</span>
             </article>
-            <article class="metric-card" data-animate>
+            <article class="metric-card" data-animate data-reveal>
               <div class="metric-icon icon-lavender"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="m7.5 11.2 2.2 2.2 4.8-5"/></svg></div>
-              <div class="metric-content"><span>TRỌNG TÂM KIẾN THỨC</span><strong>05 <small>mức độ luyện</small></strong><p>Chia theo đúng cấu trúc tài liệu</p></div>
+              <div class="metric-content"><span>TRỌNG TÂM KIẾN THỨC</span><strong data-count-to="5">05 <small>mức độ luyện</small></strong><p>Chia theo đúng cấu trúc tài liệu</p></div>
               <span class="metric-corner" aria-hidden="true">↗</span>
             </article>
           </section>
 
           <div class="dashboard-grid">
-            <section class="panel roadmap-preview" aria-labelledby="roadmapPreviewTitle" data-animate>
+            <section class="panel roadmap-preview" aria-labelledby="roadmapPreviewTitle" data-animate data-reveal>
               <div class="section-heading">
                 <div><span class="section-overline">LỘ TRÌNH HỌC</span><h2 id="roadmapPreviewTitle">Bảy ngày, vững một chương.</h2></div>
                 <button class="text-link" type="button" data-view-target="roadmap">Xem toàn bộ <span aria-hidden="true">↗</span></button>
@@ -143,7 +190,7 @@
               <div class="roadmap-footer"><span><i class="tiny-dot"></i>Gợi ý hôm nay</span><span>Ngày 1 · Đại cương &amp; đếm</span><button type="button" class="icon-next" data-open-day="1" aria-label="Mở nội dung ngày 1">→</button></div>
             </section>
 
-            <section class="panel challenge-panel" aria-labelledby="challengeTitle" data-animate>
+            <section class="panel challenge-panel" aria-labelledby="challengeTitle" data-animate data-reveal>
               <div class="challenge-top"><span class="challenge-badge"><span>✳</span> THỬ THÁCH HÔM NAY</span><span class="challenge-time"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 4.7V8l2.2 1.3"/></svg> 1 phút</span></div>
               <h2 id="challengeTitle">Kiểm tra nhanh kiến thức.</h2>
               <p class="challenge-question" id="challengeQuestion"></p>
@@ -153,7 +200,7 @@
             </section>
           </div>
 
-          <section class="topics-section" data-animate>
+          <section class="topics-section" data-animate data-reveal>
             <div class="section-heading topics-heading">
               <div><span class="section-overline">BẢN ĐỒ KIẾN THỨC</span><h2>Chọn một chủ đề để bắt đầu.</h2></div>
               <button class="text-link" type="button" data-view-target="notes">Mở sổ tay <span aria-hidden="true">↗</span></button>
@@ -203,18 +250,22 @@
             <div><strong id="practiceTotalLabel">200 bài tập sẵn sàng</strong><span>Tìm theo nội dung, lọc theo mức độ hoặc mở bất kỳ bài nào để xem lời giải.</span></div>
             <div class="practice-source"><span class="source-check">✓</span> Nội dung từ README.md</div>
           </div>
-          <div class="practice-controls">
-            <label class="exercise-search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.8" cy="8.8" r="5.5"/><path d="m13 13 4 4"/></svg><input id="exerciseSearch" type="search" placeholder="Tìm từ khóa, ví dụ: DFA, pumping lemma..." autocomplete="off"><kbd>/</kbd></label>
-            <span class="filter-caption">LỌC THEO MỨC</span>
+
+          <div class="practice-toolbar">
+            <div class="practice-controls">
+              <label class="exercise-search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.8" cy="8.8" r="5.5"/><path d="m13 13 4 4"/></svg><input id="exerciseSearch" type="search" placeholder="Tìm từ khóa, ví dụ: DFA, pumping lemma..." autocomplete="off"><kbd>/</kbd></label>
+              <span class="filter-caption">LỌC THEO MỨC</span>
+            </div>
+            <div class="level-filters" id="levelFilters">
+              <button class="filter-pill is-selected" type="button" data-level-filter="0">Tất cả <span>200</span></button>
+              <button class="filter-pill" type="button" data-level-filter="1">01 · Nhập môn <span>40</span></button>
+              <button class="filter-pill" type="button" data-level-filter="2">02 · Văn phạm <span>40</span></button>
+              <button class="filter-pill" type="button" data-level-filter="3">03 · DFA / NFA <span>45</span></button>
+              <button class="filter-pill" type="button" data-level-filter="4">04 · Regex / CNF <span>40</span></button>
+              <button class="filter-pill" type="button" data-level-filter="5">05 · Nâng cao <span>35</span></button>
+            </div>
           </div>
-          <div class="level-filters" id="levelFilters">
-            <button class="filter-pill is-selected" type="button" data-level-filter="0">Tất cả <span>200</span></button>
-            <button class="filter-pill" type="button" data-level-filter="1">01 · Nhập môn <span>40</span></button>
-            <button class="filter-pill" type="button" data-level-filter="2">02 · Văn phạm <span>40</span></button>
-            <button class="filter-pill" type="button" data-level-filter="3">03 · DFA / NFA <span>45</span></button>
-            <button class="filter-pill" type="button" data-level-filter="4">04 · Regex / CNF <span>40</span></button>
-            <button class="filter-pill" type="button" data-level-filter="5">05 · Nâng cao <span>35</span></button>
-          </div>
+
           <div class="exercise-results-head"><span id="exerciseResultsCount">Đang tải bài tập...</span><span class="exercise-sort-label">SẮP XẾP THEO THỨ TỰ BÀI</span></div>
           <div class="exercise-list" id="exerciseList" aria-live="polite"></div>
           <div class="exercise-empty" id="exerciseEmpty" hidden><span>∅</span><h3>Chưa tìm thấy bài phù hợp.</h3><p>Thử một từ khóa khác hoặc chọn “Tất cả” mức độ.</p></div>
