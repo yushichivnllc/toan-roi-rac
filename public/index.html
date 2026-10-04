@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#15342a">
+  <meta name="theme-color" content="#073bff">
   <meta name="description" content="Không gian ôn luyện Toán rời rạc: ô-tô-mát, văn phạm, biểu thức chính quy và 200 bài tập có lời giải.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any">
@@ -12,8 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/electric.css">
 </head>
 <body>
+  <a class="skip-link" href="#pageContent">Đến nội dung chính</a>
   <div class="app-shell" id="appShell">
     <aside class="sidebar" id="sidebar" aria-label="Điều hướng chính">
       <div class="brand-row">
@@ -25,7 +27,7 @@
               <path d="M29 11.5h.01M10.5 29h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
             </svg>
           </span>
-          <span class="brand-copy"><strong>rời rạc</strong><small>STUDY STUDIO</small></span>
+          <span class="brand-copy"><strong>rời rạc</strong><small>DISCRETE / STUDIO</small></span>
         </a>
         <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-label="Thu gọn thanh điều hướng" title="Thu gọn menu">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>
@@ -93,52 +95,25 @@
         </div>
       </header>
 
-      <div class="page-content" id="pageContent">
+      <div class="page-content" id="pageContent" tabindex="-1">
         <section class="view-panel is-visible" id="overview" data-view-panel="overview">
-          <div class="page-heading overview-heading" data-animate>
-            <div>
-              <div class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span><span id="todayLabel">HÀNH TRÌNH ÔN TẬP CỦA BẠN</span></div>
-              <h1>Học sâu hơn. <span>Nhớ lâu hơn.</span></h1>
-              <p>Một không gian gọn gàng để chinh phục Ô-tô-mát &amp; Ngôn ngữ hình thức.</p>
-            </div>
-            <button type="button" class="button button-outline goal-button" data-view-target="roadmap">
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.8v3.3M10 13.9v3.3M2.8 10h3.3M13.9 10h3.3M4.9 4.9l2.3 2.3m5.6 5.6 2.3 2.3m0-10.2-2.3 2.3m-5.6 5.6-2.3 2.3"/><circle cx="10" cy="10" r="3.2"/></svg>
-              Mục tiêu 7 ngày
-            </button>
-          </div>
-
+          <div class="edition-line" data-animate><span>RỜI RẠC® — KHÔNG GIAN HỌC TẬP</span><span>VOL. 03 / HỌC KHÔNG GIỚI HẠN ↗</span></div>
           <section class="hero-card" data-animate aria-labelledby="heroTitle">
+            <img class="electric-art" src="/assets/electric-ribbons.svg" alt="" aria-hidden="true">
             <div class="hero-copy">
-              <div class="hero-kicker"><span class="hero-kicker-dot"></span>CHƯƠNG 3 <span class="hero-kicker-line"></span> Ô-TÔ-MÁT &amp; NGÔN NGỮ HÌNH THỨC</div>
-              <h2 id="heroTitle">Biến khái niệm khó<br>thành <em>điểm số chắc chắn.</em></h2>
-              <p>Lý thuyết trực quan, công thức cốt lõi và 200 bài tập có lời giải — đi theo nhịp học của riêng bạn.</p>
-              <button class="button button-lime" type="button" id="continueLearning">
-                Bắt đầu ôn tập <span class="button-arrow" aria-hidden="true">↗</span>
-              </button>
-              <div class="hero-footnote"><span class="hero-footnote-icon">✳</span>HIỂU SÂU&nbsp; · &nbsp;NHỚ LÂU&nbsp; · &nbsp;LÀM ĐƯỢC</div>
+              <div class="hero-kicker"><span class="hero-kicker-dot"></span>TOÁN RỜI RẠC <span class="hero-kicker-line"></span> CHƯƠNG 03</div>
+              <h1 id="heroTitle">MỞ KHÓA<br><em>TƯ DUY.</em><span class="hero-star" aria-hidden="true">✳</span></h1>
+              <p class="hero-manifesto">HIỂU SÂU HƠN.<br>ĐI XA HƠN MỖI NGÀY.</p>
+              <p>Ô-tô-mát &amp; Ngôn ngữ hình thức.<br>200 bài tập có lời giải. Một hành trình của riêng bạn.</p>
+              <div class="hero-cta-row">
+                <button class="button button-lime" type="button" id="continueLearning">Bắt đầu ôn tập <span aria-hidden="true">↗</span></button>
+                <button class="hero-secondary" type="button" data-view-target="roadmap">Khám phá lộ trình <span aria-hidden="true">↗</span></button>
+              </div>
             </div>
-            <div class="hero-art" aria-hidden="true">
-              <div class="art-label art-label-top">FINITE AUTOMATON <span>01 / 05</span></div>
-              <div class="art-glow"></div>
-              <svg class="automaton-visual" viewBox="0 0 500 300" fill="none">
-                <path class="automaton-track" d="M85 153H215M285 153H405" stroke="rgba(221,239,207,.24)" stroke-width="2"/>
-                <path d="M210 148l8 5-8 5M400 148l8 5-8 5" stroke="#DDF0C4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M84 145c-23-45-81-30-68 6 5 15 20 22 38 15" stroke="rgba(221,239,207,.23)" stroke-width="1.6"/>
-                <path d="m50 162 7 4-1-8" stroke="#DDF0C4" stroke-width="1.5" stroke-linejoin="round"/>
-                <circle cx="85" cy="153" r="34" fill="#1C4435" stroke="#DDF0C4" stroke-width="1.5"/>
-                <circle cx="250" cy="153" r="34" fill="#1C4435" stroke="#DDF0C4" stroke-width="1.5"/>
-                <circle cx="415" cy="153" r="38" fill="#D7F39A" stroke="#D7F39A" stroke-width="1.5"/>
-                <circle cx="415" cy="153" r="31" stroke="#1C4435" stroke-width="1.6"/>
-                <text x="85" y="149" text-anchor="middle" class="state-name">q₀</text><text x="85" y="168" text-anchor="middle" class="state-sub">START</text>
-                <text x="250" y="149" text-anchor="middle" class="state-name">q₁</text><text x="250" y="168" text-anchor="middle" class="state-sub">READ</text>
-                <text x="415" y="149" text-anchor="middle" class="state-name state-name-dark">q₂</text><text x="415" y="168" text-anchor="middle" class="state-sub state-sub-dark">ACCEPT</text>
-                <text x="151" y="137" text-anchor="middle" class="transition-label">a</text><text x="334" y="137" text-anchor="middle" class="transition-label">b</text>
-                <circle id="automatonPulse" cx="250" cy="108" r="4" fill="#D7F39A"/>
-              </svg>
-              <div class="art-equation"><span>δ(q₀, a)</span><b>=</b><span>q₁</span><i></i><span class="equation-result">q₂ ∈ F</span></div>
-              <div class="art-label art-label-bottom"><span class="art-live-dot"></span>STATE MACHINE · 3 STATES</div>
-            </div>
+            <div class="poster-coordinate" aria-hidden="true">Σ* / δ / q₀<br>KNOWLEDGE IS THE KEY.<br>21° 01′ N — 105° 51′ E</div>
+            <div class="poster-bottom"><span>01 — HIỂU SÂU · NHỚ LÂU · LÀM ĐƯỢC</span><span>SCROLL TO EXPLORE ↓</span></div>
           </section>
+          <div class="ticker" aria-hidden="true"><span>THINK BEYOND</span><b>✳</b><span>PHÁ VỠ GIỚI HẠN</span><b>✳</b><span>LEARN. SOLVE. REPEAT.</span><b>✳</b><span>THINK BEYOND</span></div>
 
           <section class="metric-grid" aria-label="Tổng quan tài liệu">
             <article class="metric-card" data-animate>
