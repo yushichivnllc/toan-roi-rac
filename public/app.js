@@ -984,7 +984,7 @@
     if (window.gsap && !prefersReducedMotion) {
       window.gsap.from('.sidebar', { x: -16, opacity: 0, duration: .55, ease: 'power2.out' });
       window.gsap.from('.topbar', { y: -9, opacity: 0, duration: .45, ease: 'power2.out', delay: .06 });
-      window.gsap.from('.overview-heading', { y: 14, opacity: 0, duration: .42, ease: 'power2.out', delay: .12 });
+      window.gsap.from('.edition-line', { y: 14, opacity: 0, duration: .42, ease: 'power2.out', delay: .12 });
       window.gsap.from('.hero-card', { y: 17, opacity: 0, duration: .6, ease: 'power2.out', delay: .18 });
       window.gsap.from('.metric-card', { y: 12, opacity: 0, duration: .4, stagger: .08, ease: 'power2.out', delay: .32 });
       const pulse = document.getElementById('automatonPulse');
