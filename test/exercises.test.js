@@ -35,3 +35,10 @@ test('keeps the exercise prompt and worked solution separate for exercise detail
   const finalExercise = exercises.find(({ id }) => id === 200);
   assert.doesNotMatch(finalExercise.solutionMarkdown, /PHỤ LỤC A/);
 });
+
+test('keeps the static exercise catalog synchronized with README.md', () => {
+  const catalogPath = path.join(__dirname, '..', 'public', 'exercises.json');
+  const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
+  const expected = extractExercises(readme).map(({ searchableText: _searchableText, ...exercise }) => exercise);
+  assert.deepEqual(catalog, expected);
+});
