@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#15342a">
+  <meta name="description" content="Không gian ôn luyện Toán rời rạc: ô-tô-mát, văn phạm, biểu thức chính quy và 200 bài tập có lời giải.">
+  <title>Rời Rạc — Không gian ôn luyện Toán rời rạc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar" id="sidebar" aria-label="Điều hướng chính">
+      <div class="brand-row">
+        <a class="brand" href="#overview" data-view-target="overview" aria-label="Rời Rạc, trang tổng quan">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M11 20c0-5 3.4-8.5 8.3-8.5 4.1 0 6.5 3.1 9.7 8.5-3.2 5.4-5.6 8.5-9.7 8.5C14.4 28.5 11 25 11 20Z" stroke="currentColor" stroke-width="2.4"/>
+              <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+              <path d="M29 11.5h.01M10.5 29h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="brand-copy"><strong>rời rạc</strong><small>STUDY STUDIO</small></span>
+        </a>
+        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-label="Thu gọn thanh điều hướng" title="Thu gọn menu">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="nav-group">
+        <p class="nav-caption">KHÔNG GIAN HỌC</p>
+        <nav class="primary-nav">
+          <button class="nav-link is-active" type="button" data-view-target="overview">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="4" rx="1.5"/><rect x="13.5" y="10.5" width="7" height="10" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+            <span>Tổng quan</span><span class="nav-indicator"></span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="roadmap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.3 18h4a2 2 0 0 0 2-2v-8a2 2 0 0 1 2-2"/><path d="M5.8 4.5v3"/></svg>
+            <span>Lộ trình 7 ngày</span><span class="nav-count">07</span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="practice">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5h12M8 12h12M8 18.5h12"/><path d="m3 5.5 1.2 1.2L6.5 4M3 12l1.2 1.2L6.5 10M3 18.5l1.2 1.2L6.5 16.5"/></svg>
+            <span>Ngân hàng bài tập</span><span class="nav-count" id="sidebarExerciseCount">200</span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="notes">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8h8l4 4v12.4H6z"/><path d="M14 3.8v4.5h4M9 12h6M9 15.5h6"/></svg>
+            <span>Sổ tay công thức</span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="progress">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V12M10 19.5V6M16 19.5v-4M22 19.5V9"/><path d="M2.5 20.5h20"/></svg>
+            <span>Tiến độ của tôi</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-plan">
+        <div class="plan-topline"><span class="plan-spark">✳</span><span>GỢI Ý ÔN TẬP</span></div>
+        <p>7 ngày để vững<br>chương 3.</p>
+        <button type="button" class="plan-link" data-view-target="roadmap">Xem lộ trình <span aria-hidden="true">↗</span></button>
+        <span class="plan-orbit orbit-one"></span><span class="plan-orbit orbit-two"></span>
+      </div>
+      <div class="sidebar-footer">
+        <div class="profile-avatar" aria-hidden="true">R</div>
+        <div class="profile-copy"><strong>Góc học tập</strong><span>Chương 3 · Ô-tô-mát</span></div>
+        <button class="profile-menu" type="button" id="aboutButton" aria-label="Thông tin về ứng dụng" title="Thông tin">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="4" cy="10" r="1"/><circle cx="10" cy="10" r="1"/><circle cx="16" cy="10" r="1"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-shell">
+      <header class="topbar">
+        <div class="topbar-context">
+          <span class="topbar-kicker">KHÔNG GIAN HỌC TẬP</span>
+          <span class="topbar-divider">/</span>
+          <span class="topbar-current" id="topbarCurrent">Tổng quan</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="search-trigger" type="button" id="openSearch" aria-label="Tìm bài tập">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.8" cy="8.8" r="5.5"/><path d="m13 13 4 4"/></svg>
+            <span>Tìm nhanh bài tập...</span><kbd>⌘ K</kbd>
+          </button>
+          <button class="icon-button" type="button" id="aboutButtonTop" aria-label="Giới thiệu ứng dụng" title="Giới thiệu">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.1"/><path d="M8.2 7.3a1.9 1.9 0 1 1 3.2 1.4c-.9.8-1.4 1.1-1.4 2.2M10 14.2h.01"/></svg>
+          </button>
+          <div class="topbar-avatar" aria-label="Góc học tập">R</div>
+        </div>
+      </header>
+
+      <div class="page-content" id="pageContent">
+        <section class="view-panel is-visible" id="overview" data-view-panel="overview">
+          <div class="page-heading overview-heading" data-animate>
+            <div>
+              <div class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span><span id="todayLabel">HÀNH TRÌNH ÔN TẬP CỦA BẠN</span></div>
+              <h1>Học sâu hơn. <span>Nhớ lâu hơn.</span></h1>
+              <p>Một không gian gọn gàng để chinh phục Ô-tô-mát &amp; Ngôn ngữ hình thức.</p>
+            </div>
+            <button type="button" class="button button-outline goal-button" data-view-target="roadmap">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.8v3.3M10 13.9v3.3M2.8 10h3.3M13.9 10h3.3M4.9 4.9l2.3 2.3m5.6 5.6 2.3 2.3m0-10.2-2.3 2.3m-5.6 5.6-2.3 2.3"/><circle cx="10" cy="10" r="3.2"/></svg>
+              Mục tiêu 7 ngày
+            </button>
+          </div>
+
+          <section class="hero-card" data-animate aria-labelledby="heroTitle">
+            <div class="hero-copy">
+              <div class="hero-kicker"><span class="hero-kicker-dot"></span>CHƯƠNG 3 <span class="hero-kicker-line"></span> Ô-TÔ-MÁT &amp; NGÔN NGỮ HÌNH THỨC</div>
+              <h2 id="heroTitle">Biến khái niệm khó<br>thành <em>điểm số chắc chắn.</em></h2>
+              <p>Lý thuyết trực quan, công thức cốt lõi và 200 bài tập có lời giải — đi theo nhịp học của riêng bạn.</p>
+              <button class="button button-lime" type="button" id="continueLearning">
+                Bắt đầu ôn tập <span class="button-arrow" aria-hidden="true">↗</span>
+              </button>
+              <div class="hero-footnote"><span class="hero-footnote-icon">✳</span>HIỂU SÂU&nbsp; · &nbsp;NHỚ LÂU&nbsp; · &nbsp;LÀM ĐƯỢC</div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="art-label art-label-top">FINITE AUTOMATON <span>01 / 05</span></div>
+              <div class="art-glow"></div>
+              <svg class="automaton-visual" viewBox="0 0 500 300" fill="none">
+                <path class="automaton-track" d="M85 153H215M285 153H405" stroke="rgba(221,239,207,.24)" stroke-width="2"/>
+                <path d="M210 148l8 5-8 5M400 148l8 5-8 5" stroke="#DDF0C4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M84 145c-23-45-81-30-68 6 5 15 20 22 38 15" stroke="rgba(221,239,207,.23)" stroke-width="1.6"/>
+                <path d="m50 162 7 4-1-8" stroke="#DDF0C4" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="85" cy="153" r="34" fill="#1C4435" stroke="#DDF0C4" stroke-width="1.5"/>
+                <circle cx="250" cy="153" r="34" fill="#1C4435" stroke="#DDF0C4" stroke-width="1.5"/>
+                <circle cx="415" cy="153" r="38" fill="#D7F39A" stroke="#D7F39A" stroke-width="1.5"/>
+                <circle cx="415" cy="153" r="31" stroke="#1C4435" stroke-width="1.6"/>
+                <text x="85" y="149" text-anchor="middle" class="state-name">q₀</text><text x="85" y="168" text-anchor="middle" class="state-sub">START</text>
+                <text x="250" y="149" text-anchor="middle" class="state-name">q₁</text><text x="250" y="168" text-anchor="middle" class="state-sub">READ</text>
+                <text x="415" y="149" text-anchor="middle" class="state-name state-name-dark">q₂</text><text x="415" y="168" text-anchor="middle" class="state-sub state-sub-dark">ACCEPT</text>
+                <text x="151" y="137" text-anchor="middle" class="transition-label">a</text><text x="334" y="137" text-anchor="middle" class="transition-label">b</text>
+                <circle id="automatonPulse" cx="250" cy="108" r="4" fill="#D7F39A"/>
+              </svg>
+              <div class="art-equation"><span>δ(q₀, a)</span><b>=</b><span>q₁</span><i></i><span class="equation-result">q₂ ∈ F</span></div>
+              <div class="art-label art-label-bottom"><span class="art-live-dot"></span>STATE MACHINE · 3 STATES</div>
+            </div>
+          </section>
+
+          <section class="metric-grid" aria-label="Tổng quan tài liệu">
+            <article class="metric-card" data-animate>
+              <div class="metric-icon icon-mint"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5 4.5h12M5 8.5h12M5 12.5h7M5 16.5h8"/><path d="M3 2.5h16v17H3z"/></svg></div>
+              <div class="metric-content"><span>THƯ VIỆN BÀI TẬP</span><strong>200 <small>bài có lời giải</small></strong><p>Từ nhập môn đến cực khó</p></div>
+              <span class="metric-corner" aria-hidden="true">↗</span>
+            </article>
+            <article class="metric-card" data-animate>
+              <div class="metric-icon icon-peach"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M11 6.5v4.8l3.3 2"/></svg></div>
+              <div class="metric-content"><span>LỘ TRÌNH GỢI Ý</span><strong>07 <small>ngày ôn tập</small></strong><p>Mỗi ngày 2–3 giờ tập trung</p></div>
+              <span class="metric-corner" aria-hidden="true">↗</span>
+            </article>
+            <article class="metric-card" data-animate>
+              <div class="metric-icon icon-lavender"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="m7.5 11.2 2.2 2.2 4.8-5"/></svg></div>
+              <div class="metric-content"><span>TRỌNG TÂM KIẾN THỨC</span><strong>05 <small>mức độ luyện</small></strong><p>Chia theo đúng cấu trúc tài liệu</p></div>
+              <span class="metric-corner" aria-hidden="true">↗</span>
+            </article>
+          </section>
+
+          <div class="dashboard-grid">
+            <section class="panel roadmap-preview" aria-labelledby="roadmapPreviewTitle" data-animate>
+              <div class="section-heading">
+                <div><span class="section-overline">LỘ TRÌNH HỌC</span><h2 id="roadmapPreviewTitle">Bảy ngày, vững một chương.</h2></div>
+                <button class="text-link" type="button" data-view-target="roadmap">Xem toàn bộ <span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="preview-days" id="previewDays"></div>
+              <div class="roadmap-footer"><span><i class="tiny-dot"></i>Gợi ý hôm nay</span><span>Ngày 1 · Đại cương &amp; đếm</span><button type="button" class="icon-next" data-open-day="1" aria-label="Mở nội dung ngày 1">→</button></div>
+            </section>
+
+            <section class="panel challenge-panel" aria-labelledby="challengeTitle" data-animate>
+              <div class="challenge-top"><span class="challenge-badge"><span>✳</span> THỬ THÁCH HÔM NAY</span><span class="challenge-time"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 4.7V8l2.2 1.3"/></svg> 1 phút</span></div>
+              <h2 id="challengeTitle">Kiểm tra nhanh kiến thức.</h2>
+              <p class="challenge-question" id="challengeQuestion"></p>
+              <div class="challenge-options" id="challengeOptions"></div>
+              <div class="challenge-feedback" id="challengeFeedback" aria-live="polite"></div>
+              <div class="challenge-footer"><span>Đúng một câu nhỏ,<br>tiến một bước dài.</span><button class="round-arrow" type="button" id="startQuizFromChallenge" aria-label="Làm mini quiz">↗</button></div>
+            </section>
+          </div>
+
+          <section class="topics-section" data-animate>
+            <div class="section-heading topics-heading">
+              <div><span class="section-overline">BẢN ĐỒ KIẾN THỨC</span><h2>Chọn một chủ đề để bắt đầu.</h2></div>
+              <button class="text-link" type="button" data-view-target="notes">Mở sổ tay <span aria-hidden="true">↗</span></button>
+            </div>
+            <div class="topic-grid">
+              <button class="topic-card topic-card-mint" type="button" data-open-day="1">
+                <span class="topic-number">01 / NỀN TẢNG</span><span class="topic-symbol">Σ</span>
+                <span class="topic-title">Xâu &amp; ngôn ngữ</span><span class="topic-description">Bảng chữ cái, Σ*, phép toán và quy tắc đếm.</span>
+                <span class="topic-bottom"><span>40 bài tập</span><span class="topic-arrow">↗</span></span>
+              </button>
+              <button class="topic-card topic-card-lilac" type="button" data-open-day="3">
+                <span class="topic-number">02 / MÁY TRẠNG THÁI</span><span class="topic-symbol topic-symbol-automaton">q₀</span>
+                <span class="topic-title">DFA &amp; NFA</span><span class="topic-description">Thiết kế máy, đọc bảng chuyển, xây tập con.</span>
+                <span class="topic-bottom"><span>45 bài tập</span><span class="topic-arrow">↗</span></span>
+              </button>
+              <button class="topic-card topic-card-peach" type="button" data-open-day="5">
+                <span class="topic-number">03 / BIỂU DIỄN</span><span class="topic-symbol topic-symbol-regex">(a+b)*</span>
+                <span class="topic-title">Regex &amp; văn phạm</span><span class="topic-description">Chuyển đổi biểu thức, giản lược và chuẩn hóa.</span>
+                <span class="topic-bottom"><span>40 bài tập</span><span class="topic-arrow">↗</span></span>
+              </button>
+              <button class="topic-card topic-card-yellow" type="button" data-open-day="6">
+                <span class="topic-number">04 / MÁY CÓ BỘ NHỚ</span><span class="topic-symbol topic-symbol-stack">▤</span>
+                <span class="topic-title">PDA &amp; bổ đề bơm</span><span class="topic-description">Ngăn xếp, ngôn ngữ phi ngữ cảnh, chứng minh.</span>
+                <span class="topic-bottom"><span>35 bài tập</span><span class="topic-arrow">↗</span></span>
+              </button>
+            </div>
+          </section>
+        </section>
+
+        <section class="view-panel" data-view-panel="roadmap" hidden>
+          <div class="page-heading page-heading-wide">
+            <div><div class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span>KẾ HOẠCH ÔN TẬP</div><h1>Lộ trình <span>7 ngày.</span></h1><p>Đi từ nền tảng đến những dạng bài thử thách nhất, theo đúng nhịp của chương 3.</p></div>
+            <div class="roadmap-progress-card"><div class="progress-ring-small"><svg viewBox="0 0 52 52" aria-hidden="true"><circle class="ring-track" cx="26" cy="26" r="21"/><circle class="ring-value" id="roadmapRing" cx="26" cy="26" r="21"/></svg><span id="roadmapProgressValue">0%</span></div><div><span>TIẾN ĐỘ LỘ TRÌNH</span><strong id="roadmapProgressLabel">0 / 7 ngày hoàn thành</strong></div></div>
+          </div>
+          <div class="roadmap-banner"><div><span class="section-overline">KẾ HOẠCH ĐỀ XUẤT</span><h2>Học có chiến lược.<br><em>Không học thuộc máy móc.</em></h2><p>Mỗi chặng gồm chủ điểm cần nắm, dải bài tập tương ứng và một mục tiêu cụ thể.</p><button class="button button-lime" id="startRoadmapButton" type="button" data-open-day="1">Bắt đầu ngày 1 <span class="button-arrow">↗</span></button></div><div class="banner-stamp"><strong>7</strong><span>DAYS<br>TO MASTERY</span><i>✳</i></div></div>
+          <div class="roadmap-list" id="roadmapList"></div>
+          <div class="roadmap-note"><span class="note-spark">✳</span><p><strong>Mẹo ôn tập:</strong> Học một chủ đề, tự giải một bài, rồi kiểm tra lời giải. Mỗi lần hoàn thành chặng, đánh dấu để theo dõi tiến độ trên thiết bị này.</p></div>
+        </section>
+
+        <section class="view-panel" data-view-panel="practice" hidden>
+          <div class="page-heading page-heading-wide practice-heading">
+            <div><div class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span>LUYỆN TẬP CÓ CHỦ ĐÍCH</div><h1>Ngân hàng <span>bài tập.</span></h1><p>200 bài từ README, được phân loại theo 5 mức độ và đi kèm lời giải chi tiết.</p></div>
+            <button class="button button-dark" type="button" id="startQuizButton"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.5 4.5 8 5.5-8 5.5z"/></svg>Làm mini quiz <span class="quiz-count">5 câu</span></button>
+          </div>
+          <div class="practice-summary-strip">
+            <div class="practice-summary-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h4"/></svg></div>
+            <div><strong id="practiceTotalLabel">200 bài tập sẵn sàng</strong><span>Tìm theo nội dung, lọc theo mức độ hoặc mở bất kỳ bài nào để xem lời giải.</span></div>
+            <div class="practice-source"><span class="source-check">✓</span> Nội dung từ README.md</div>
+          </div>
+          <div class="practice-controls">
+            <label class="exercise-search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.8" cy="8.8" r="5.5"/><path d="m13 13 4 4"/></svg><input id="exerciseSearch" type="search" placeholder="Tìm từ khóa, ví dụ: DFA, pumping lemma..." autocomplete="off"><kbd>/</kbd></label>
+            <span class="filter-caption">LỌC THEO MỨC</span>
+          </div>
+          <div class="level-filters" id="levelFilters">
+            <button class="filter-pill is-selected" type="button" data-level-filter="0">Tất cả <span>200</span></button>
+            <button class="filter-pill" type="button" data-level-filter="1">01 · Nhập môn <span>40</span></button>
+            <button class="filter-pill" type="button" data-level-filter="2">02 · Văn phạm <span>40</span></button>
+            <button class="filter-pill" type="button" data-level-filter="3">03 · DFA / NFA <span>45</span></button>
+            <button class="filter-pill" type="button" data-level-filter="4">04 · Regex / CNF <span>40</span></button>
+            <button class="filter-pill" type="button" data-level-filter="5">05 · Nâng cao <span>35</span></button>
+          </div>
+          <div class="exercise-results-head"><span id="exerciseResultsCount">Đang tải bài tập...</span><span class="exercise-sort-label">SẮP XẾP THEO THỨ TỰ BÀI</span></div>
+          <div class="exercise-list" id="exerciseList" aria-live="polite"></div>
+          <div class="exercise-empty" id="exerciseEmpty" hidden><span>∅</span><h3>Chưa tìm thấy bài phù hợp.</h3><p>Thử một từ khóa khác hoặc chọn “Tất cả” mức độ.</p></div>
+          <div class="pagination-row"><button type="button" class="button button-outline" id="loadMoreExercises">Xem thêm bài tập <span aria-hidden="true">↓</span></button><span id="paginationHint"></span></div>
+        </section>
+
+        <section class="view-panel" data-view-panel="notes" hidden>
+          <div class="page-heading page-heading-wide notes-heading">
+            <div><div class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span>ÔN NHANH TRƯỚC GIỜ THI</div><h1>Sổ tay <span>công thức.</span></h1><p>Những ký hiệu, quy trình và “bẫy” thường gặp — gom lại trên một trang.</p></div>
+            <div class="notes-search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.8" cy="8.8" r="5.5"/><path d="m13 13 4 4"/></svg><input id="notesSearch" type="search" placeholder="Tìm trong sổ tay..."></div>
+          </div>
+          <div class="notes-banner"><span class="notes-banner-symbol">ε</span><div><span>NHỚ NHANH · CHƯƠNG 3</span><strong>0 thì tự do. 1 thì không co. 2 thì đơn thân. 3 thì tuyến tính.</strong></div><span class="notes-banner-mark">✳</span></div>
+          <div class="notes-grid" id="notesGrid">
+            <article class="note-card note-card-featured" data-note="chomsky">
+              <div class="note-card-top"><span class="note-tag">PHÂN LOẠI</span><button class="copy-button" type="button" data-copy="L₃ ⊂ L₂ ⊂ L₁ ⊂ L₀" aria-label="Sao chép phân cấp Chomsky"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="1.5"/><path d="M13 6V3H4v11h3"/></svg></button></div>
+              <h2>Phân cấp Chomsky</h2><p>Bốn tầng văn phạm và máy tương ứng — luôn kiểm tra từ loại mạnh nhất xuống.</p>
+              <div class="chomsky-stack"><div><b>03</b><span>Chính quy</span><code>DFA / NFA</code></div><div><b>02</b><span>Phi ngữ cảnh</span><code>PDA</code></div><div><b>01</b><span>Cảm ngữ cảnh</span><code>LBA</code></div><div><b>00</b><span>Ngữ cấu</span><code>Máy Turing</code></div></div>
+              <div class="note-formula">L₃ ⊂ L₂ ⊂ L₁ ⊂ L₀</div>
+            </article>
+            <article class="note-card" data-note="symbols">
+              <div class="note-card-top"><span class="note-tag note-tag-green">KÝ HIỆU CƠ BẢN</span><button class="copy-button" type="button" data-copy="Σ* = Σ+ ∪ {ε};  Σ+ = Σ* \\ {ε};  ∅* = {ε}" aria-label="Sao chép các ký hiệu cơ bản"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="1.5"/><path d="M13 6V3H4v11h3"/></svg></button></div>
+              <h2>Σ*, Σ⁺ và ε</h2><p>Σ* chứa mọi xâu, kể cả xâu rỗng. Σ⁺ chỉ chứa xâu khác rỗng.</p>
+              <div class="formula-box">Σ* = Σ⁺ ∪ {ε}<br>Σ⁺ = Σ* \ {ε}<br><strong>∅* = {ε}</strong></div>
+              <div class="note-warning"><span>!</span><span>∅ khác {ε}: một tập không có phần tử, một tập có đúng xâu rỗng.</span></div>
+            </article>
+            <article class="note-card" data-note="regular">
+              <div class="note-card-top"><span class="note-tag note-tag-lilac">NGÔN NGỮ CHÍNH QUY</span><button class="copy-button" type="button" data-copy="(r + s)* ≠ r* + s*" aria-label="Sao chép lưu ý về biểu thức chính quy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="1.5"/><path d="M13 6V3H4v11h3"/></svg></button></div>
+              <h2>Thứ tự phép toán regex</h2><p>Lặp mạnh nhất, ghép ở giữa, hợp yếu nhất. Dấu “+” trong giáo trình là phép hợp.</p>
+              <div class="formula-box formula-box-lilac"><span>r*  →  lặp</span><span>rs  →  ghép</span><span>r + s  →  hợp</span></div>
+              <div class="note-warning warning-lilac"><span>!</span><span>(r+s)* cho phép xen kẽ; r*+s* thì không.</span></div>
+            </article>
+            <article class="note-card" data-note="subset">
+              <div class="note-card-top"><span class="note-tag note-tag-peach">THUẬT TOÁN</span><button class="copy-button" type="button" data-copy="T₀ = ε-closure({q₀});  T —a→ ε-closure(⋃ δ(q,a))" aria-label="Sao chép quy tắc tập con"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="1.5"/><path d="M13 6V3H4v11h3"/></svg></button></div>
+              <h2>NFA → DFA · phương pháp tập con</h2><p>Mỗi trạng thái mới là một tập trạng thái cũ. Chỉ liệt kê tập với tới được.</p>
+              <ol class="step-list"><li><b>01</b><span>Bắt đầu từ ε-closure(q₀).</span></li><li><b>02</b><span>Gộp mọi trạng thái đi được theo ký tự.</span></li><li><b>03</b><span>Tập chứa trạng thái kết thúc → kết thúc.</span></li></ol>
+            </article>
+            <article class="note-card" data-note="cnf">
+              <div class="note-card-top"><span class="note-tag note-tag-yellow">CHUẨN HÓA</span><button class="copy-button" type="button" data-copy="ε → quy tắc đơn → vô sinh → không đến được → CNF" aria-label="Sao chép thứ tự chuẩn hóa"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="1.5"/><path d="M13 6V3H4v11h3"/></svg></button></div>
+              <h2>Giản lược &amp; CNF</h2><p>Thứ tự làm sạch văn phạm trước khi đưa về dạng chuẩn Chomsky.</p>
+              <div class="pipeline"><span>ε</span><i>→</i><span>Đơn</span><i>→</i><span>Vô sinh</span><i>→</i><span>CNF</span></div>
+              <div class="note-foot">CNF: A → BC  hoặc  A → a</div>
+            </article>
+            <article class="note-card" data-note="pumping">
+              <div class="note-card-top"><span class="note-tag note-tag-green">CHỨNG MINH</span><button class="copy-button" type="button" data-copy="w = xyz; |xy| ≤ n; |y| ≥ 1; ∀i ≥ 0: xyⁱz ∈ L" aria-label="Sao chép bổ đề bơm"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="1.5"/><path d="M13 6V3H4v11h3"/></svg></button></div>
+              <h2>Bổ đề bơm chính quy</h2><p>Dùng để chứng minh một ngôn ngữ không chính quy. Đây là điều kiện cần, không phải điều kiện đủ.</p>
+              <div class="formula-box formula-box-green">w = xyz<br>|xy| ≤ n, |y| ≥ 1<br>∀i ≥ 0: xyⁱz ∈ L</div>
+              <div class="note-warning warning-green"><span>→</span><span>Với aⁿbⁿ, chọn w = aⁿbⁿ rồi bơm i = 0 hoặc i = 2.</span></div>
+            </article>
+            <article class="note-card" data-note="pda">
+              <div class="note-card-top"><span class="note-tag note-tag-lilac">BỘ NHỚ NGĂN XẾP</span><button class="copy-button" type="button" data-copy="PDA = (Q, Σ, Γ, δ, q₀, z₀, F)" aria-label="Sao chép định nghĩa PDA"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="1.5"/><path d="M13 6V3H4v11h3"/></svg></button></div>
+              <h2>PDA · FA + ngăn xếp</h2><p>Bộ nhớ LIFO cho phép máy ghi lại một số lượng không giới hạn.</p>
+              <div class="stack-visual"><span>đỉnh</span><b>A</b><b>A</b><b>A</b><i>z₀ · đáy</i></div>
+              <div class="note-foot">Đẩy khi đọc a · lấy ra khi đọc b → nhận aⁿbⁿ</div>
+            </article>
+            <article class="note-card" data-note="exam">
+              <div class="note-card-top"><span class="note-tag note-tag-peach">CHECKLIST THI</span><button class="copy-button" type="button" data-copy="DFA đầy đủ · ε-closure · ngoặc regex · hình trạng PDA · xét mọi cách bơm" aria-label="Sao chép checklist thi"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="1.5"/><path d="M13 6V3H4v11h3"/></svg></button></div>
+              <h2>10 giây trước khi nộp</h2><p>Rà lại bẫy ký hiệu, điều kiện kết thúc và bước chứng minh.</p>
+              <ul class="check-list"><li><span>✓</span> DFA có trạng thái chết?</li><li><span>✓</span> Đã lấy ε-closure?</li><li><span>✓</span> PDA đã đọc hết xâu?</li><li><span>✓</span> Đã xét đủ vị trí bơm?</li></ul>
+            </article>
+          </div>
+          <div class="no-notes" id="noNotes" hidden><span>⌕</span><strong>Không tìm thấy nội dung phù hợp.</strong><p>Thử một từ khóa khác nhé.</p></div>
+        </section>
+
+        <section class="view-panel" data-view-panel="progress" hidden>
+          <div class="page-heading page-heading-wide">
+            <div><div class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span>NHỊP HỌC CỦA BẠN</div><h1>Tiến độ <span>của tôi.</span></h1><p>Mọi thứ bạn đánh dấu được lưu ngay trên thiết bị này.</p></div>
+            <button class="button button-outline" type="button" id="resetProgressButton">Đặt lại tiến độ</button>
+          </div>
+          <div class="progress-overview-grid">
+            <article class="progress-hero-card"><div class="progress-hero-copy"><span class="section-overline">CHƯƠNG 3 · Ô-TÔ-MÁT &amp; NGÔN NGỮ HÌNH THỨC</span><h2>Mỗi lần luyện tập,<br><em>bạn tiến thêm một bước.</em></h2><p id="progressEncouragement">Bắt đầu bằng một câu hỏi nhỏ. Nhịp học đều đặn quan trọng hơn học thật nhiều trong một buổi.</p><button class="button button-lime" type="button" data-view-target="practice">Luyện một bài <span class="button-arrow">↗</span></button></div><div class="large-progress-ring"><svg viewBox="0 0 164 164" aria-hidden="true"><circle cx="82" cy="82" r="68" class="large-ring-track"/><circle cx="82" cy="82" r="68" class="large-ring-value" id="largeProgressRing"/></svg><div><strong id="largeProgressPercent">0%</strong><span>ĐÃ ÔN LUYỆN</span></div></div></article>
+            <div class="progress-stat-column"><article class="progress-stat-card"><span class="progress-stat-icon stat-icon-green">✓</span><div><span>BÀI ĐÃ ĐÁNH DẤU ÔN TẬP</span><strong id="solvedCount">0 <small>/ 200</small></strong></div></article><article class="progress-stat-card"><span class="progress-stat-icon stat-icon-peach">✳</span><div><span>NGÀY LỘ TRÌNH HOÀN THÀNH</span><strong id="completedDayCount">0 <small>/ 7</small></strong></div></article><article class="progress-stat-card"><span class="progress-stat-icon stat-icon-lilac">◎</span><div><span>MINI QUIZ ĐÃ HOÀN THÀNH</span><strong id="quizCount">0 <small>lần</small></strong></div></article></div>
+          </div>
+          <div class="progress-details-grid">
+            <section class="panel weekly-progress-panel"><div class="section-heading"><div><span class="section-overline">NHỊP HỌC</span><h2>Hoạt động gần đây.</h2></div><span class="mini-label">7 NGÀY</span></div><div class="weekly-chart" id="weeklyChart"></div><div class="chart-legend"><span><i></i>Mỗi cột là một ngày bạn đã học</span><strong id="weeklyActivityLabel">Chưa có hoạt động ghi nhận</strong></div></section>
+            <section class="panel achievement-panel"><div class="section-heading"><div><span class="section-overline">CÁC CỘT MỐC</span><h2>Huy hiệu học tập.</h2></div><span class="achievement-count" id="achievementCount">0 / 4</span></div><div class="achievement-list" id="achievementList"></div></section>
+          </div>
+          <section class="panel recent-panel"><div class="section-heading"><div><span class="section-overline">BÀI TẬP CỦA BẠN</span><h2>Đã đánh dấu ôn tập.</h2></div><button class="text-link" type="button" data-view-target="practice">Tìm thêm bài <span>↗</span></button></div><div id="solvedExerciseList" class="solved-exercise-list"></div></section>
+        </section>
+      </div>
+      <footer class="app-footer"><span>RỜI RẠC <i>·</i> HỌC CHẮC TỪNG BƯỚC</span><span>Nội dung dựa trên README.md <b>↗</b></span></footer>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Điều hướng trên thiết bị di động">
+    <button type="button" data-view-target="overview" class="is-active"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="4" rx="1.5"/><rect x="13.5" y="10.5" width="7" height="10" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span>Tổng quan</span></button>
+    <button type="button" data-view-target="roadmap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.3 18h4a2 2 0 0 0 2-2v-8a2 2 0 0 1 2-2"/></svg><span>Lộ trình</span></button>
+    <button type="button" data-view-target="practice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5h12M8 12h12M8 18.5h12"/><path d="m3 5.5 1.2 1.2L6.5 4M3 12l1.2 1.2L6.5 10M3 18.5l1.2 1.2L6.5 16.5"/></svg><span>Bài tập</span></button>
+    <button type="button" data-view-target="notes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8h8l4 4v12.4H6z"/><path d="M14 3.8v4.5h4M9 12h6M9 15.5h6"/></svg><span>Sổ tay</span></button>
+    <button type="button" data-view-target="progress"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V12M10 19.5V6M16 19.5v-4M22 19.5V9"/><path d="M2.5 20.5h20"/></svg><span>Tiến độ</span></button>
+  </nav>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal-card" id="modalCard" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Đóng cửa sổ">×</button>
+      <div id="modalContent"></div>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><span class="toast-icon">✓</span><span id="toastMessage"></span></div>
+
+  <script src="/vendor/gsap/gsap.min.js"></script>
+  <script src="/app.js" defer></script>
+</body>
+</html>

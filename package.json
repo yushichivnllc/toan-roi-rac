@@ -1,0 +1,16 @@
+{
+  "name": "roi-rac-study-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ứng dụng ôn luyện Toán rời rạc — Chương 3: Ô-tô-mát & ngôn ngữ hình thức",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "gsap": "^3.14.1"
+  }
+}
