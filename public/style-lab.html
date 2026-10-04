@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Style Lab — chọn hướng thị giác cho Rời Rạc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;600&family=Archivo+Black&family=Archivo:wght@500;600;700&family=Space+Mono:wght@400;700&family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   STYLE LAB — trang so sánh 4 hướng thị giác trên CÙNG một bộ
+   component thật của app (sidebar / hero / metric / filter / row).
+   Không đụng tới index.html, styles.css hay app.js.
+   ============================================================ */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #101215;
+  color: #e9ecef;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
+a { color: inherit; }
+
+/* ---------- chrome của chính trang lab ---------- */
+.lab-head {
+  padding: 30px 34px 22px;
+  border-bottom: 1px solid #23272d;
+  background: linear-gradient(180deg, #14171b, #101215);
+}
+.lab-head h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: -.5px; }
+.lab-head p { margin: 0; max-width: 78ch; color: #9aa4ae; }
+.lab-head code { color: #d7f29d; background: #1b2016; padding: 1px 6px; border-radius: 4px; font-size: 12.5px; }
+.lab-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.lab-legend span {
+  padding: 5px 10px; border: 1px solid #2b3138; border-radius: 999px;
+  color: #b7c0c8; font-size: 11.5px; letter-spacing: .2px;
+}
+.lab-grid { display: grid; gap: 26px; padding: 28px 34px 70px; }
+@media (min-width: 1400px) { .lab-grid { grid-template-columns: 1fr 1fr; } }
+
+.col { border: 1px solid #23272d; border-radius: 14px; background: #0d0f12; overflow: hidden; }
+.col-head { display: flex; align-items: baseline; gap: 12px; padding: 16px 18px; border-bottom: 1px solid #1c2026; }
+.col-head b { font-size: 15px; letter-spacing: -.2px; }
+.col-head em { color: #8d97a1; font-size: 12px; font-style: normal; }
+.col-head .tag {
+  margin-left: auto; padding: 3px 9px; border-radius: 999px;
+  background: #1a1e23; border: 1px solid #2b3138; color: #b7c0c8; font-size: 10.5px; letter-spacing: .6px;
+}
+.stage { padding: 16px; }
+
+/* token strip */
+.tokens { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 8px; padding: 0 16px 16px; }
+.token { border: 1px solid #1c2026; border-radius: 10px; padding: 9px 10px; background: #12151a; }
+.token i { display: block; height: 26px; border-radius: 6px; margin-bottom: 7px; border: 1px solid rgba(255,255,255,.08); }
+.token b { display: block; font-size: 10.5px; letter-spacing: .5px; color: #9aa4ae; text-transform: uppercase; }
+.token span { font-size: 11px; color: #6f7a85; font-family: 'IBM Plex Mono', monospace; }
+
+/* ============================================================
+   MOCK APP — cùng markup cho cả 4 theme, style hoàn toàn từ biến
+   ============================================================ */
+.mock {
+  display: grid; grid-template-columns: 168px 1fr; min-height: 520px;
+  background: var(--page); color: var(--ink);
+  font-family: var(--body); border-radius: var(--r-lg); overflow: hidden;
+  border: var(--edge); box-shadow: var(--sh);
+}
+.mock * { font-family: inherit; }
+
+/* sidebar */
+.m-side {
+  background: var(--nav); color: var(--nav-ink);
+  padding: 16px 12px; display: flex; flex-direction: column; gap: 6px;
+  border-right: var(--edge-inner); position: relative;
+}
+.m-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 22px; }
+.m-mark {
+  display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 30px;
+  background: var(--accent); color: var(--accent-ink); border-radius: var(--r-sm);
+  font-family: var(--display); font-weight: 800; font-size: 13px; border: var(--mark-edge);
+}
+.m-brand-txt strong { display: block; font-family: var(--display); font-size: 14px; letter-spacing: -.4px; line-height: 1.1; }
+.m-brand-txt small { font-size: 7px; letter-spacing: 1.5px; opacity: .55; font-weight: 700; }
+.m-cap { margin: 6px 4px 6px; font-size: 7.5px; letter-spacing: 1.2px; opacity: .5; font-weight: 700; }
+.m-nav {
+  display: flex; align-items: center; gap: 8px; padding: 7px 9px; min-height: 32px;
+  border: 0; border-radius: var(--r-sm); background: transparent; color: inherit;
+  text-align: left; font-size: 11px; opacity: .72; position: relative;
+}
+.m-nav svg { width: 14px; height: 14px; flex: 0 0 14px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.m-nav.on { background: var(--nav-on); opacity: 1; font-weight: 700; }
+.m-nav.on::before { content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: var(--rail, 3px); border-radius: 3px; background: var(--accent); }
+.m-nav .n {
+  margin-left: auto; padding: 1px 5px; border-radius: var(--r-xs); font-size: 8px; font-weight: 800;
+  background: var(--nav-badge); opacity: .9;
+}
+.m-plan {
+  margin-top: 14px; padding: 11px; border-radius: var(--r-md);
+  border: var(--plan-edge); background: var(--plan-bg);
+}
+.m-plan b { display: block; font-family: var(--display); font-size: 12.5px; line-height: 1.3; letter-spacing: -.2px; }
+.m-plan span { display: block; font-size: 8px; letter-spacing: 1px; opacity: .6; font-weight: 700; margin-bottom: 6px; }
+.m-plan a { display: block; margin-top: 8px; color: var(--accent-2); font-size: 9px; font-weight: 700; text-decoration: none; }
+.m-foot { margin-top: auto; display: flex; align-items: center; gap: 8px; padding-top: 12px; border-top: var(--edge-inner); }
+.m-av { width: 26px; height: 26px; border-radius: var(--av-r); display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 800; }
+.m-foot p { margin: 0; font-size: 9.5px; line-height: 1.3; }
+.m-foot small { display: block; opacity: .55; font-size: 8px; }
+
+/* main */
+.m-main { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 13px; }
+.m-top { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: var(--edge-inner); }
+.m-crumb { font-size: 8px; letter-spacing: 1.1px; opacity: .5; font-weight: 700; }
+.m-crumb b { opacity: 1; }
+.m-search {
+  margin-left: auto; display: flex; align-items: center; gap: 7px; padding: 5px 9px;
+  border-radius: var(--r-sm); border: var(--edge); background: var(--surface-2);
+  font-size: 10px; color: var(--ink-soft); min-width: 150px;
+}
+.m-search svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.m-search kbd {
+  margin-left: auto; padding: 1px 5px; border-radius: 4px; background: var(--surface-3);
+  border: 1px solid var(--line); font-size: 8px; font-family: var(--mono);
+}
+.m-eyebrow { display: flex; align-items: center; gap: 7px; font-size: 8px; letter-spacing: 1.3px; font-weight: 800; color: var(--ink-soft); }
+.m-eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); display: block; }
+.m-h1 { margin: 4px 0 0; font-family: var(--display); font-size: 27px; line-height: 1.08; letter-spacing: -.9px; font-weight: 800; }
+.m-h1 em { font-style: normal; color: var(--accent-2); background: var(--accent-wash); padding: 0 4px; border-radius: var(--r-xs); }
+.m-sub { margin: 0; font-size: 11.5px; color: var(--ink-soft); max-width: 46ch; }
+
+.m-hero {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 16px; padding: 16px;
+  background: var(--hero-bg); color: var(--hero-ink); border-radius: var(--r-lg);
+  border: var(--edge); position: relative; overflow: hidden;
+}
+.m-hero::after { content: ""; position: absolute; inset: 0; background-image: var(--hero-pattern); opacity: var(--hero-pattern-o, 0); pointer-events: none; }
+.m-hero > * { position: relative; z-index: 1; }
+.m-hero h2 { margin: 6px 0 8px; font-family: var(--display); font-size: 21px; line-height: 1.14; letter-spacing: -.6px; }
+.m-hero h2 i { font-style: normal; color: var(--hero-accent); }
+.m-hero p { margin: 0 0 12px; font-size: 10.5px; opacity: .72; max-width: 34ch; }
+.m-kicker { display: flex; align-items: center; gap: 6px; font-size: 7.5px; letter-spacing: 1.3px; font-weight: 800; opacity: .7; }
+.m-kicker s { display: block; width: 16px; height: 1px; background: currentColor; opacity: .5; }
+.m-cta {
+  display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px;
+  border-radius: var(--r-sm); border: 0; background: var(--accent); color: var(--accent-ink);
+  font-size: 11px; font-weight: 800; letter-spacing: -.1px; box-shadow: var(--cta-sh);
+}
+.m-cta svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.m-ghost {
+  display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; padding: 8px 12px;
+  border-radius: var(--r-sm); border: var(--edge); background: transparent; color: inherit;
+  font-size: 10.5px; font-weight: 700; opacity: .8;
+}
+.m-art { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.m-art svg { width: 100%; height: auto; }
+.m-eq {
+  display: flex; align-items: center; gap: 6px; padding: 6px 9px; border-radius: var(--r-sm);
+  background: var(--hero-eq-bg); font-family: var(--mono); font-size: 9.5px;
+}
+.m-eq b { color: var(--hero-accent); }
+.m-art-lab { font-size: 7.5px; letter-spacing: 1.2px; font-weight: 700; opacity: .55; }
+
+.m-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.m-metric { padding: 12px; border-radius: var(--r-md); border: var(--edge); background: var(--surface); position: relative; }
+.m-metric span { display: block; font-size: 7.5px; letter-spacing: 1.1px; font-weight: 800; color: var(--ink-soft); }
+.m-metric strong { display: block; font-family: var(--display); font-size: 22px; letter-spacing: -.8px; margin: 5px 0 2px; }
+.m-metric small { font-size: 9.5px; font-weight: 700; color: var(--ink-soft); }
+.m-metric p { margin: 4px 0 0; font-size: 9.5px; color: var(--ink-soft); opacity: .8; }
+.m-metric .ico {
+  position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; display: grid; place-items: center;
+  border-radius: var(--r-xs); background: var(--chip); color: var(--chip-ink);
+}
+.m-metric .ico svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+
+.m-row-lab { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.m-lab-t { font-size: 8px; letter-spacing: 1.2px; font-weight: 800; color: var(--ink-soft); }
+.m-lab-t::after { content: ""; display: block; flex: 1; height: 1px; background: var(--line); margin-top: 3px; }
+.m-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.m-pill {
+  padding: 5px 10px; border-radius: var(--pill-r); border: var(--edge); background: var(--surface);
+  font-size: 9.5px; font-weight: 700; color: var(--ink-soft);
+}
+.m-pill.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 800; }
+.m-pill b { opacity: .6; font-weight: 800; margin-left: 4px; }
+
+.m-item {
+  display: flex; align-items: center; gap: 11px; padding: 11px 12px;
+  border-radius: var(--r-md); border: var(--edge); background: var(--surface);
+}
+.m-num {
+  width: 30px; height: 30px; flex: 0 0 30px; display: grid; place-items: center;
+  border-radius: var(--r-xs); background: var(--chip); color: var(--chip-ink);
+  font-family: var(--display); font-size: 12px; font-weight: 800;
+}
+.m-item-t { min-width: 0; }
+.m-item-t b { display: block; font-size: 11.5px; letter-spacing: -.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-item-t span { font-size: 9.5px; color: var(--ink-soft); }
+.m-badge {
+  margin-left: auto; padding: 3px 8px; border-radius: var(--pill-r); background: var(--badge-bg);
+  color: var(--badge-ink); font-size: 8px; font-weight: 800; letter-spacing: .4px; white-space: nowrap;
+}
+.m-mini {
+  width: 28px; height: 28px; display: grid; place-items: center; border-radius: var(--r-sm);
+  border: var(--edge); background: var(--surface-2); color: var(--ink-soft); font-size: 12px;
+}
+.m-mini.solid { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+
+.m-note { display: flex; gap: 10px; padding: 11px 12px; border-radius: var(--r-md); background: var(--note-bg); border: var(--note-edge); }
+.m-note p { margin: 0; font-size: 10px; color: var(--ink-soft); }
+.m-note b { color: var(--ink); }
+.m-formula { margin-top: 7px; padding: 7px 9px; border-radius: var(--r-xs); background: var(--surface); border: var(--edge); font-family: var(--mono); font-size: 10px; color: var(--ink); }
+
+/* ============================================================
+   THEME 0 — HIỆN TẠI (baseline, để đối chiếu)
+   ============================================================ */
+.t-now {
+  --page: #f6f7f3; --surface: #fff; --surface-2: #fbfcf9; --surface-3: #f1f3ee;
+  --ink: #1d2722; --ink-soft: #56645d; --line: #e8eae4;
+  --accent: #d7f29d; --accent-2: #4c7a3c; --accent-ink: #15372c; --accent-wash: transparent;
+  --nav: #15372c; --nav-ink: #b5c8bb; --nav-on: rgba(235,246,226,.11); --nav-badge: rgba(255,255,255,.075);
+  --chip: #e7f0e8; --chip-ink: #2f5b47; --badge-bg: #eef4e8; --badge-ink: #4a6a44;
+  --hero-bg: #15372c; --hero-ink: #eef6e6; --hero-accent: #d7f29d; --hero-eq-bg: rgba(255,255,255,.07);
+  --note-bg: #f5f0d9; --note-edge: 1px solid #ece3c4;
+  --r-xs: 8px; --r-sm: 10px; --r-md: 13px; --r-lg: 18px; --pill-r: 999px; --av-r: 50%;
+  --edge: 1px solid var(--line); --edge-inner: 1px solid rgba(255,255,255,.1);
+  --mark-edge: 0; --plan-edge: 1px solid rgba(233,244,226,.12); --plan-bg: rgba(255,255,255,.055);
+  --sh: 0 12px 34px rgba(33,49,39,.055); --cta-sh: none;
+  --display: 'Manrope', sans-serif; --body: 'DM Sans', sans-serif; --mono: 'IBM Plex Mono', monospace;
+  --hero-pattern: none; --rail: 3px;
+}
+.t-now .m-side { border-right-color: rgba(255,255,255,.08); }
+
+/* ============================================================
+   THEME A — "AOI": poster Nhật / blue abstract
+   giấy lạnh, lam điện, viền đậm 2px, số cực lớn, chấm halftone
+   ============================================================ */
+.t-aoi {
+  --page: #eceff6; --surface: #fff; --surface-2: #f4f6fb; --surface-3: #e4e8f2;
+  --ink: #101a33; --ink-soft: #5a6480; --line: #101a33;
+  --accent: #2440e0; --accent-2: #2440e0; --accent-ink: #fff; --accent-wash: #dbe2ff;
+  --nav: #101a33; --nav-ink: #aab4d6; --nav-on: #2440e0; --nav-badge: rgba(255,255,255,.12);
+  --chip: #2440e0; --chip-ink: #fff; --badge-bg: #ff4d2e; --badge-ink: #fff;
+  --hero-bg: #fff; --hero-ink: #101a33; --hero-accent: #ff4d2e; --hero-eq-bg: #eceff6;
+  --note-bg: #dbe2ff; --note-edge: 2px solid #101a33;
+  --r-xs: 2px; --r-sm: 3px; --r-md: 4px; --r-lg: 5px; --pill-r: 3px; --av-r: 2px;
+  --edge: 2px solid #101a33; --edge-inner: 1px solid rgba(255,255,255,.14);
+  --mark-edge: 2px solid #101a33; --plan-edge: 2px solid #2440e0; --plan-bg: transparent;
+  --sh: 6px 6px 0 rgba(16,26,51,.9); --cta-sh: 4px 4px 0 #101a33;
+  --display: 'Space Grotesk', sans-serif; --body: 'Space Grotesk', sans-serif; --mono: 'IBM Plex Mono', monospace;
+  --hero-pattern: radial-gradient(circle, rgba(36,64,224,.16) 1px, transparent 1.4px);
+  --hero-pattern-o: 1; --rail: 4px;
+}
+.t-aoi .m-h1 { font-size: 30px; font-weight: 700; letter-spacing: -1.3px; }
+.t-aoi .m-hero h2 { letter-spacing: -.8px; }
+.t-aoi .m-metric strong { font-size: 26px; }
+.t-aoi .m-side { background: #101a33; }
+.t-aoi .m-search { background: #fff; }
+.t-aoi .m-cap, .t-aoi .m-crumb { letter-spacing: 1.6px; }
+.t-aoi .m-nav.on { color: #fff; }
+.t-aoi .m-eyebrow { color: #2440e0; }
+.t-aoi .m-art-lab { font-family: var(--mono); }
+
+/* ============================================================
+   THEME B — "RISO": print collage / giấy thủ công
+   kem giấy, chồng màu 2 lớp riso, băng dính, card lệch trục
+   ============================================================ */
+.t-riso {
+  --page: #f3ece0; --surface: #fdfaf3; --surface-2: #f7f1e5; --surface-3: #eee5d5;
+  --ink: #191512; --ink-soft: #6b6055; --line: #191512;
+  --accent: #191512; --accent-2: #2f55e4; --accent-ink: #f6efdf; --accent-wash: transparent;
+  --nav: #221c17; --nav-ink: #b9ab98; --nav-on: #f2557c; --nav-badge: rgba(255,255,255,.14);
+  --chip: #f2557c; --chip-ink: #fff8ef; --badge-bg: #2f55e4; --badge-ink: #fff8ef;
+  --hero-bg: #f2557c; --hero-ink: #fff8ef; --hero-accent: #ffd94a; --hero-eq-bg: rgba(25,21,18,.28);
+  --note-bg: #efe4cd; --note-edge: 1px dashed #191512;
+  --r-xs: 2px; --r-sm: 3px; --r-md: 3px; --r-lg: 4px; --pill-r: 999px; --av-r: 50%;
+  --edge: 1.5px solid #191512; --edge-inner: 1px solid rgba(255,255,255,.16);
+  --mark-edge: 1.5px solid #191512; --plan-edge: 1.5px solid #ffd94a; --plan-bg: rgba(255,217,74,.1);
+  --sh: 5px 5px 0 rgba(25,21,18,.16); --cta-sh: 3px 3px 0 #191512;
+  --display: 'Archivo Black', 'Archivo', sans-serif; --body: 'Archivo', sans-serif; --mono: 'Space Mono', monospace;
+  --hero-pattern: repeating-linear-gradient(45deg, rgba(47,85,228,.16) 0 6px, transparent 6px 12px);
+  --hero-pattern-o: 1; --rail: 5px;
+}
+.t-riso .m-h1 { letter-spacing: -1.1px; }
+.t-riso .m-metric:nth-child(2) { transform: rotate(-.7deg); }
+.t-riso .m-metric:nth-child(3) { transform: rotate(.6deg); }
+.t-riso .m-item { transform: rotate(-.35deg); }
+.t-riso .m-eyebrow, .t-riso .m-cap, .t-riso .m-crumb { font-family: var(--mono); letter-spacing: 1.4px; }
+.t-riso .m-nav.on { color: #fff8ef; }
+.t-riso .m-cta { background: #191512; color: #f6efdf; }
+.t-riso .m-hero { border-width: 2px; }
+.t-riso .m-metric .ico { background: #2f55e4; color: #fff8ef; }
+
+/* ============================================================
+   THEME C — "MOMO": cute banner / soft kawaii
+   nền trời nhạt, viền chunky, bo lớn, bóng đổ cứng, sticker
+   ============================================================ */
+.t-momo {
+  --page: #e9f1ff; --surface: #fff; --surface-2: #f4f8ff; --surface-3: #e3ecfd;
+  --ink: #232b45; --ink-soft: #6b7694; --line: #232b45;
+  --accent: #ffc861; --accent-2: #4a7dff; --accent-ink: #232b45; --accent-wash: #dbe8ff;
+  --nav: #2b3459; --nav-ink: #b9c3e2; --nav-on: rgba(255,200,97,.2); --nav-badge: rgba(255,255,255,.16);
+  --chip: #ffe6f0; --chip-ink: #d64b86; --badge-bg: #d8f3dc; --badge-ink: #2f6b4f;
+  --hero-bg: #4a7dff; --hero-ink: #fff; --hero-accent: #ffc861; --hero-eq-bg: rgba(255,255,255,.2);
+  --note-bg: #fff4dd; --note-edge: 2px solid #232b45;
+  --r-xs: 10px; --r-sm: 14px; --r-md: 18px; --r-lg: 24px; --pill-r: 999px; --av-r: 50%;
+  --edge: 2px solid #232b45; --edge-inner: 1px solid rgba(255,255,255,.22);
+  --mark-edge: 2px solid #232b45; --plan-edge: 2px solid #ffc861; --plan-bg: rgba(255,200,97,.14);
+  --sh: 4px 6px 0 rgba(35,43,69,.16); --cta-sh: 3px 3px 0 #232b45;
+  --display: 'Baloo 2', 'Nunito', sans-serif; --body: 'Nunito', sans-serif; --mono: 'Space Mono', monospace;
+  --hero-pattern: radial-gradient(circle at 18% 22%, rgba(255,255,255,.18) 0 14px, transparent 15px),
+                  radial-gradient(circle at 82% 76%, rgba(255,200,97,.3) 0 20px, transparent 21px);
+  --hero-pattern-o: 1; --rail: 4px;
+}
+.t-momo .m-h1 { font-size: 29px; letter-spacing: -.6px; }
+.t-momo .m-hero h2 { font-size: 22px; }
+.t-momo .m-nav { font-weight: 700; opacity: .78; }
+.t-momo .m-nav.on { color: #fff; }
+.t-momo .m-cta { background: #ffc861; }
+.t-momo .m-metric { border-radius: var(--r-md); }
+.t-momo .m-eyebrow { color: #4a7dff; }
+.t-momo .m-mini.solid { background: #4a7dff; color: #fff; border-color: #232b45; }
+</style>
+</head>
+<body>
+
+<header class="lab-head">
+  <h1>Style Lab — chọn hướng thị giác</h1>
+  <p>
+    Ảnh Pinterest bạn gửi bị chặn khi tôi cố tải về (Pinterest trả <code>403</code> / trang CAPTCHA), nên tôi dựng sẵn
+    <strong>3 hướng thị giác</strong> bám theo metadata lấy được từ chính pin đó — tiêu đề
+    <code>Ý tưởng | Dễ thương, Thiết kế biểu ngữ, Trang bìa</code> và các từ khoá liên quan
+    <code>japanese poster design · print collage · blue abstract · graphic score</code>.
+    Mỗi cột dưới đây render <strong>cùng một bộ component thật của app</strong> (sidebar, hero, metric, filter, danh sách bài tập, công thức).
+    Bạn chỉ cần nói "chọn A/B/C" — hoặc gửi lại ảnh bằng cách kéo-thả file vào khung chat để tôi bám 1:1.
+  </p>
+  <div class="lab-legend">
+    <span>0 · HIỆN TẠI — forest + lime</span>
+    <span>A · AOI — poster Nhật, lam điện, viền 2px</span>
+    <span>B · RISO — print collage, chồng màu, giấy kem</span>
+    <span>C · MOMO — cute banner, bo lớn, viền chunky</span>
+  </div>
+</header>
+
+<div class="lab-grid" id="labGrid"></div>
+
+<template id="mockTpl">
+  <div class="mock">
+    <aside class="m-side">
+      <div class="m-brand">
+        <span class="m-mark">δ</span>
+        <span class="m-brand-txt"><strong>rời rạc</strong><small>STUDY STUDIO</small></span>
+      </div>
+      <p class="m-cap">KHÔNG GIAN HỌC</p>
+      <button class="m-nav on"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="4" rx="1.5"/><rect x="13.5" y="10.5" width="7" height="10" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/></svg>Tổng quan</button>
+      <button class="m-nav"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.3 18h4a2 2 0 0 0 2-2v-8a2 2 0 0 1 2-2"/></svg>Lộ trình 7 ngày</button>
+      <button class="m-nav"><svg viewBox="0 0 24 24"><path d="M8 5.5h12M8 12h12M8 18.5h12"/><path d="m3 5.5 1.2 1.2L6.5 4"/></svg>Ngân hàng bài tập<span class="n">200</span></button>
+      <button class="m-nav"><svg viewBox="0 0 24 24"><path d="M4 19.5V12M10 19.5V6M16 19.5v-4M22 19.5V9"/><path d="M2.5 20.5h20"/></svg>Tiến độ của tôi</button>
+      <div class="m-plan">
+        <span>✳ GỢI Ý ÔN TẬP</span>
+        <b>7 ngày để vững chương 3.</b>
+        <a href="#">Xem lộ trình ↗</a>
+      </div>
+      <div class="m-foot">
+        <span class="m-av">R</span>
+        <p><b>Góc học tập</b><small>Chương 3 · Ô-tô-mát</small></p>
+      </div>
+    </aside>
+
+    <div class="m-main">
+      <div class="m-top">
+        <span class="m-crumb">KHÔNG GIAN HỌC TẬP / <b>TỔNG QUAN</b></span>
+        <span class="m-search">
+          <svg viewBox="0 0 20 20"><circle cx="8.8" cy="8.8" r="5.5"/><path d="m13 13 4 4"/></svg>
+          Tìm nhanh bài tập... <kbd>⌘K</kbd>
+        </span>
+      </div>
+
+      <div>
+        <div class="m-eyebrow"><i></i>HÀNH TRÌNH ÔN TẬP CỦA BẠN</div>
+        <h1 class="m-h1">Học sâu hơn. <em>Nhớ lâu hơn.</em></h1>
+        <p class="m-sub">Một không gian gọn gàng để chinh phục Ô-tô-mát &amp; Ngôn ngữ hình thức.</p>
+      </div>
+
+      <section class="m-hero">
+        <div>
+          <div class="m-kicker">CHƯƠNG 3 <s></s> Ô-TÔ-MÁT &amp; NNHT</div>
+          <h2>Biến khái niệm khó thành <i>điểm số chắc chắn.</i></h2>
+          <p>Lý thuyết trực quan, công thức cốt lõi và 200 bài tập có lời giải.</p>
+          <button class="m-cta">Bắt đầu ôn tập <svg viewBox="0 0 20 20"><path d="M5 15 15 5M8 5h7v7"/></svg></button>
+          <button class="m-ghost">Cheat sheet</button>
+        </div>
+        <div class="m-art">
+          <div class="m-art-lab">FINITE AUTOMATON · 01/05</div>
+          <svg viewBox="0 0 300 120" fill="none">
+            <path d="M60 60h60M180 60h60" stroke="currentColor" stroke-opacity=".35" stroke-width="2"/>
+            <path d="m114 55 8 5-8 5M234 55 8 5-8 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="60" cy="60" r="22" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="180" cy="60" r="22" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="262" cy="60" r="26" fill="currentColor"/>
+            <text x="60" y="65" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">q₀</text>
+            <text x="180" y="65" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">q₁</text>
+            <text x="262" y="65" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor" style="mix-blend-mode:difference">q₂</text>
+            <text x="132" y="50" text-anchor="middle" font-size="12" fill="currentColor">a</text>
+            <text x="218" y="50" text-anchor="middle" font-size="12" fill="currentColor">b</text>
+          </svg>
+          <div class="m-eq"><span>δ(q₀, a)</span><b>=</b><span>q₁</span><b>→</b><span>q₂ ∈ F</span></div>
+          <div class="m-art-lab">STATE MACHINE · 3 STATES</div>
+        </div>
+      </section>
+
+      <div class="m-metrics">
+        <article class="m-metric">
+          <span class="ico"><svg viewBox="0 0 22 22"><path d="M5 4.5h12M5 8.5h12M5 12.5h7M5 16.5h8"/><path d="M3 2.5h16v17H3z"/></svg></span>
+          <span>THƯ VIỆN BÀI TẬP</span><strong>200</strong><small>bài có lời giải</small>
+          <p>Từ nhập môn đến cực khó</p>
+        </article>
+        <article class="m-metric">
+          <span class="ico"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="7.5"/><path d="M11 6.5v4.8l3.3 2"/></svg></span>
+          <span>LỘ TRÌNH GỢI Ý</span><strong>07</strong><small>ngày ôn tập</small>
+          <p>Mỗi ngày 2–3 giờ tập trung</p>
+        </article>
+        <article class="m-metric">
+          <span class="ico"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="7.5"/><path d="m7.5 11.2 2.2 2.2 4.8-5"/></svg></span>
+          <span>TRỌNG TÂM</span><strong>05</strong><small>mức độ luyện</small>
+          <p>Đúng cấu trúc tài liệu</p>
+        </article>
+      </div>
+
+      <div class="m-row-lab"><span class="m-lab-t">BỘ LỌC &amp; DANH SÁCH BÀI</span></div>
+      <div class="m-pills">
+        <span class="m-pill on">Tất cả <b>200</b></span>
+        <span class="m-pill">01 · Nhập môn <b>40</b></span>
+        <span class="m-pill">03 · DFA / NFA <b>45</b></span>
+        <span class="m-pill">05 · Nâng cao <b>35</b></span>
+      </div>
+      <div class="m-item">
+        <span class="m-num">17</span>
+        <span class="m-item-t"><b>Chuyển NFA sang DFA bằng phương pháp tập con</b><span>Cho NFA 4 trạng thái, xây dựng DFA tương đương</span></span>
+        <span class="m-badge">MỨC 03</span>
+        <span class="m-mini">✓</span>
+        <span class="m-mini solid">↗</span>
+      </div>
+
+      <div class="m-note">
+        <div>
+          <p><b>Bẫy ký pháp:</b> trong slide, <b>+</b> nghĩa là hợp (a+b = "a hoặc b"), còn trong Python <b>+</b> là lặp ≥1 lần.</p>
+          <div class="m-formula">Σ* = Σ⁺ ∪ {^} &nbsp;·&nbsp; |w| = n</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  const DIRECTIONS = [
+    { cls: 't-now',  name: '0 · HIỆN TẠI',   note: 'baseline đang chạy trên production', tag: 'ĐỐI CHỨNG',
+      tokens: [['#15372c','forest · sidebar'],['#d7f29d','lime · accent'],['#f6f7f3','page'],['#e8eae4','line'],['Manrope','display'],['18px','radius L']] },
+    { cls: 't-aoi',  name: 'A · AOI',        note: 'poster Nhật / blue abstract — viền 2px, bóng đổ cứng, halftone', tag: 'GRAPHIC',
+      tokens: [['#101a33','ink · navy'],['#2440e0','ultramarine'],['#ff4d2e','vermillion'],['#eceff6','paper'],['Space Grotesk','display'],['5px','radius L']] },
+    { cls: 't-riso', name: 'B · RISO',       note: 'print collage — chồng màu 2 lớp riso, băng dính, card lệch trục', tag: 'EDITORIAL',
+      tokens: [['#191512','ink'],['#f2557c','riso pink'],['#2f55e4','riso blue'],['#f3ece0','paper'],['Archivo Black','display'],['4px','radius L']] },
+    { cls: 't-momo', name: 'C · MOMO',       note: 'cute banner — bo lớn, viền chunky 2px, sticker vàng, bóng đổ cứng', tag: 'FRIENDLY',
+      tokens: [['#232b45','ink'],['#4a7dff','sky blue'],['#ffc861','butter'],['#e9f1ff','paper'],['Baloo 2','display'],['24px','radius L']] },
+  ];
+
+  const grid = document.getElementById('labGrid');
+  const tpl = document.getElementById('mockTpl');
+
+  for (const d of DIRECTIONS) {
+    const col = document.createElement('section');
+    col.className = 'col';
+    col.innerHTML =
+      '<div class="col-head"><b>' + d.name + '</b><em>' + d.note + '</em><span class="tag">' + d.tag + '</span></div>' +
+      '<div class="stage"></div><div class="tokens"></div>';
+
+    const mock = tpl.content.firstElementChild.cloneNode(true);
+    mock.classList.add(d.cls);
+    col.querySelector('.stage').appendChild(mock);
+
+    const tokens = col.querySelector('.tokens');
+    for (const [value, label] of d.tokens) {
+      const t = document.createElement('div');
+      t.className = 'token';
+      const swatch = value.startsWith('#') ? 'background:' + value : 'background:repeating-linear-gradient(90deg,#2a3038 0 6px,#1b2026 6px 12px)';
+      t.innerHTML = '<i style="' + swatch + '"></i><b>' + label.split(' · ')[0] + '</b><span>' + value + '</span>';
+      tokens.appendChild(t);
+    }
+    grid.appendChild(col);
+  }
+</script>
+</body>
+</html>
