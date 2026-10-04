@@ -350,7 +350,12 @@
     if (name === 'practice' && !options.skipExercises) loadExercises(true);
     if (!options.keepScroll) window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     const panel = document.querySelector(`[data-view-panel="${name}"]`);
-    if (panel) animateIn(panel.querySelectorAll('[data-animate], .panel, .roadmap-day-card, .note-card'));
+    if (panel) {
+      // Những khối có [data-reveal] do IntersectionObserver đảm nhiệm để tránh trùng hiệu ứng.
+      const targets = [...panel.querySelectorAll('[data-animate], .panel, .roadmap-day-card, .note-card')]
+        .filter((node) => !node.hasAttribute('data-reveal') && !node.closest('[data-reveal]'));
+      animateIn(targets);
+    }
   }
 
   function showToast(message) {
@@ -524,6 +529,12 @@
     return exerciseCatalogPromise;
   }
 
+  function renderExerciseSkeletons(count = 5) {
+    const list = document.getElementById('exerciseList');
+    if (!list) return;
+    list.innerHTML = Array.from({ length: count }, () => '<div class="exercise-skeleton" aria-hidden="true"><span class="sk-number"></span><span class="sk-line-wide"></span><span class="sk-tag"></span></div>').join('');
+  }
+
   async function loadExercises(reset = false) {
     if (reset) {
       exercisePage = 1;
@@ -536,6 +547,11 @@
     if (!list || !resultsCount) return;
     const requestId = ++exerciseRequestId;
     list.classList.add('is-loading');
+    if (reset) {
+      renderExerciseSkeletons();
+      if (empty) empty.hidden = true;
+      if (loadMore) loadMore.hidden = true;
+    }
     resultsCount.textContent = 'Đang tải bài tập...';
 
     try {
@@ -747,6 +763,23 @@
     setText('largeProgressPercent', `${percent}%`);
     const ring = document.getElementById('largeProgressRing');
     if (ring) ring.style.strokeDashoffset = String(427 - (427 * percent / 100));
+
+    // Hero + topbar cùng phản ánh một con số tiến độ.
+    const heroValue = document.getElementById('heroProgressValue');
+    if (heroValue) heroValue.textContent = `${percent}%`;
+    const heroCount = document.getElementById('heroProgressCount');
+    if (heroCount) heroCount.textContent = `${solved}/200 bài`;
+    const heroBar = document.getElementById('heroProgressBar');
+    if (heroBar) heroBar.style.width = `${percent}%`;
+    const heroHint = document.getElementById('heroProgressHint');
+    if (heroHint) {
+      heroHint.textContent = solved >= 50
+        ? 'Nhịp học rất vững. Mở sổ tay để rà lại các “bẫy ký hiệu” trước khi thi.'
+        : solved > 0
+          ? `Còn ${Math.max(0, 200 - solved)} bài trong ngân hàng. Mỗi bài đánh dấu là một bước tiến.`
+          : 'Mở một bài tập và đánh dấu “đã ôn” để bắt đầu vẽ tiến độ.';
+    }
+    setText('topbarSolvedCount', String(solved));
     const encouragement = document.getElementById('progressEncouragement');
     if (encouragement) {
       encouragement.textContent = solved >= 50
@@ -945,6 +978,76 @@
     }
   }
 
+  // Lớp hiệu ứng nền: thanh tiến độ cuộn, vệt sáng theo con trỏ, khối hiện dần khi cuộn.
+  function initAmbience() {
+    const bar = document.querySelector('#scrollProgress > span');
+    let frame = 0;
+    const paintScrollBar = () => {
+      frame = 0;
+      if (!bar) return;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+      bar.style.width = `${(Math.min(1, Math.max(0, ratio)) * 100).toFixed(2)}%`;
+    };
+    const queueScrollBar = () => { if (!frame) frame = window.requestAnimationFrame(paintScrollBar); };
+    window.addEventListener('scroll', queueScrollBar, { passive: true });
+    window.addEventListener('resize', queueScrollBar, { passive: true });
+    paintScrollBar();
+
+    const pointer = document.getElementById('fxPointer');
+    if (pointer && !prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
+      let x = 0;
+      let y = 0;
+      let queued = false;
+      const paintPointer = () => {
+        queued = false;
+        pointer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      };
+      window.addEventListener('pointermove', (event) => {
+        x = event.clientX;
+        y = event.clientY;
+        document.body.classList.add('has-pointer');
+        if (!queued) { queued = true; window.requestAnimationFrame(paintPointer); }
+      }, { passive: true });
+    }
+
+    const revealItems = [...document.querySelectorAll('[data-reveal]')];
+    if (!revealItems.length) return;
+    if (!('IntersectionObserver' in window)) {
+      revealItems.forEach((item) => item.classList.add('is-inview'));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-inview');
+        entry.target.querySelectorAll('[data-count-to]').forEach(countUp);
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: .08 });
+    revealItems.forEach((item) => observer.observe(item));
+  }
+
+  function countUp(node) {
+    if (prefersReducedMotion || node.dataset.counted === 'true') return;
+    node.dataset.counted = 'true';
+    const textNode = [...node.childNodes].find((child) => child.nodeType === 3 && child.textContent.trim());
+    if (!textNode) return;
+    const raw = textNode.textContent.trim();
+    const value = Number(raw);
+    if (!Number.isFinite(value)) return;
+    const width = raw.length;
+    const started = performance.now();
+    const step = (now) => {
+      const progress = Math.min(1, (now - started) / 900);
+      const eased = 1 - ((1 - progress) ** 3);
+      textNode.textContent = ` ${String(Math.round(value * eased)).padStart(width, '0')} `;
+      if (progress < 1) window.requestAnimationFrame(step);
+      else textNode.textContent = ` ${raw} `;
+    };
+    window.requestAnimationFrame(step);
+  }
+
   function init() {
     const date = new Intl.DateTimeFormat('vi-VN', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date());
     const dateLabel = document.getElementById('todayLabel');
@@ -980,15 +1083,16 @@
     renderRoadmap();
     renderProgress();
     loadExercises(true);
+    initAmbience();
 
     if (window.gsap && !prefersReducedMotion) {
       window.gsap.from('.sidebar', { x: -16, opacity: 0, duration: .55, ease: 'power2.out' });
       window.gsap.from('.topbar', { y: -9, opacity: 0, duration: .45, ease: 'power2.out', delay: .06 });
       window.gsap.from('.edition-line', { y: 14, opacity: 0, duration: .42, ease: 'power2.out', delay: .12 });
       window.gsap.from('.hero-card', { y: 17, opacity: 0, duration: .6, ease: 'power2.out', delay: .18 });
-      window.gsap.from('.metric-card', { y: 12, opacity: 0, duration: .4, stagger: .08, ease: 'power2.out', delay: .32 });
-      const pulse = document.getElementById('automatonPulse');
-      if (pulse) window.gsap.to(pulse, { attr: { cx: 415 }, duration: 1.9, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: .7 });
+      window.gsap.from('.hero-copy > *', { y: 16, opacity: 0, duration: .5, stagger: .07, ease: 'power2.out', delay: .3 });
+      window.gsap.from('.hero-panel', { y: 22, opacity: 0, duration: .55, ease: 'power2.out', delay: .42 });
+      window.gsap.from('.ticker', { opacity: 0, duration: .5, ease: 'power2.out', delay: .5 });
     }
   }
 
