@@ -11,7 +11,7 @@ npm install
 npm run dev
 
 # 2) Giao diện React (cổng 5173) — proxy /api và /exercises.json sang cổng 3000
-npm --prefix client install
+#    (root tự cài deps của client nếu thiếu — hook prebuild/predev:client)
 npm run dev:client
 ```
 
