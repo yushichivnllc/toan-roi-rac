@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="eoRibbon" x1="120" y1="720" x2="700" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity=".15"/>
+      <stop offset=".28" stop-color="#9fd0ff" stop-opacity=".85"/>
+      <stop offset=".5" stop-color="#ffffff"/>
+      <stop offset=".72" stop-color="#b8f4ff" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity=".1"/>
+    </linearGradient>
+    <linearGradient id="eoArc" x1="180" y1="640" x2="660" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe738" stop-opacity=".1"/>
+      <stop offset=".5" stop-color="#ffe738"/>
+      <stop offset="1" stop-color="#ff2fd0" stop-opacity=".85"/>
+    </linearGradient>
+    <radialGradient id="eoGlow" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#8fc4ff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#8fc4ff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="eoHalftone" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="2.1" fill="#ffffff" fill-opacity=".4"/>
+    </pattern>
+    <pattern id="eoGrid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" stroke="#ffffff" stroke-opacity=".16" stroke-width="1"/>
+    </pattern>
+    <filter id="eoSoft" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="eoBlur6" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <marker id="eoArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 1 9 5 0 9Z" fill="#ffe738"/>
+    </marker>
+    <path id="eoPath" d="M60 760C300 540 940 508 512 320S660 96 604-40"/>
+  </defs>
+
+  <!-- kết cấu nền poster -->
+  <circle cx="452" cy="392" r="286" fill="url(#eoGlow)" opacity=".85"/>
+  <circle cx="452" cy="392" r="270" fill="url(#eoHalftone)" opacity=".5"/>
+  <rect x="182" y="122" width="540" height="540" fill="url(#eoGrid)" opacity=".5"/>
+  <circle cx="452" cy="392" r="270" stroke="#ffffff" stroke-opacity=".32"/>
+  <circle cx="452" cy="392" r="316" stroke="#ffffff" stroke-opacity=".16"/>
+  <circle cx="452" cy="392" r="222" stroke="#ffffff" stroke-opacity=".24" stroke-dasharray="2 7"/>
+
+  <!-- dải năng lượng -->
+  <use href="#eoPath" stroke="#b9e4ff" stroke-opacity=".55" stroke-width="78" filter="url(#eoSoft)"/>
+  <use href="#eoPath" stroke="url(#eoRibbon)" stroke-width="52"/>
+  <use href="#eoPath" stroke="#ffffff" stroke-width="2" stroke-opacity=".85" transform="translate(-30 -6)"/>
+  <use href="#eoPath" stroke="#ffffff" stroke-width="3" stroke-opacity=".6" transform="translate(40 8)"/>
+
+  <!-- cung điện + tia phóng -->
+  <path d="M232 664C372 520 512 452 676 300" stroke="url(#eoArc)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M262 700C402 556 552 486 716 334" stroke="#ffe738" stroke-width="2" stroke-opacity=".55" stroke-dasharray="26 8 3 6"/>
+  <path d="M690 90 604 214l88-6-92 132 26-96-84 18Z" fill="#ff2fd0" opacity=".9"/>
+  <path d="M150 190l22 54 54 22-54 22-22 54-22-54-54-22 54-22Z" fill="#ffe738"/>
+  <path d="M646 566l14 34 34 14-34 14-14 34-14-34-34-14 34-14Z" fill="#ffe738" opacity=".85"/>
+
+  <!-- ô-tô-mát mẫu: q0 → q1 → q2 -->
+  <g stroke="#ffe738" stroke-width="2.4" marker-end="url(#eoArrow)">
+    <path d="M262 566h136"/>
+    <path d="M470 556c42-46 74-84 100-118"/>
+    <path d="M226 512c-34-38-40-84-10-124"/>
+  </g>
+  <g fill="#ffe738" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="21" font-weight="600">
+    <text x="310" y="552">a</text>
+    <text x="520" y="504">b</text>
+    <text x="176" y="424">a</text>
+  </g>
+  <g fill="none" stroke="#ffffff" stroke-width="3">
+    <circle cx="222" cy="566" r="40"/>
+    <circle cx="438" cy="566" r="40"/>
+    <circle cx="438" cy="566" r="31" stroke-opacity=".7" stroke-dasharray="4 5"/>
+    <circle cx="612" cy="392" r="40"/>
+  </g>
+  <g fill="none" stroke="#ffe738" stroke-width="3">
+    <path d="M612 352a40 40 0 1 1-40 40"/>
+  </g>
+  <g fill="#ffffff" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="19" font-weight="600" text-anchor="middle">
+    <text x="222" y="574">q₀</text>
+    <text x="438" y="574">q₁</text>
+    <text x="612" y="400">q₂</text>
+  </g>
+
+  <!-- nhãn kỹ thuật -->
+  <g fill="#ffffff" fill-opacity=".62" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="15" letter-spacing="2.4">
+    <text x="196" y="86">Σ* / δ / q₀</text>
+    <text x="600" y="742" text-anchor="end">M = (Q, Σ, δ, q₀, F)</text>
+  </g>
+  <g fill="#ffe738">
+    <text x="452" y="70" text-anchor="middle" font-size="26">✳</text>
+    <text x="146" y="742" font-size="20">✳</text>
+  </g>
+  <g stroke="#ffffff" stroke-opacity=".7">
+    <path d="M0 700h210l24 14h566"/>
+    <path d="M0 712h204l24 14h572"/>
+  </g>
+  <g fill="#ffffff">
+    <path d="M330 150h14v14h-14zM300 176h8v8h-8zM372 108h6v6h-6zM690 452h10v10h-10z"/>
+  </g>
+</svg>

@@ -6,8 +6,14 @@ const { LEVELS, extractExercises } = require('./lib/exercises');
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = __dirname;
-const PUBLIC_DIR = path.join(ROOT, 'public');
+const LEGACY_DIR = path.join(ROOT, 'public');
+const CLIENT_DIR = path.join(ROOT, 'client', 'dist');
 const README_PATH = path.join(ROOT, 'README.md');
+
+// Giao diện React (client/dist) được ưu tiên khi đã build; nếu chưa build thì
+// phục vụ bản vanilla cũ trong public/ để không làm gián đoạn việc học.
+const hasClientBuild = fs.existsSync(path.join(CLIENT_DIR, 'index.html'));
+const PUBLIC_DIR = hasClientBuild ? CLIENT_DIR : LEGACY_DIR;
 
 const readme = fs.readFileSync(README_PATH, 'utf8');
 const exercises = extractExercises(readme);
@@ -78,8 +84,16 @@ app.get('/api/exercises/:id', (request, response) => {
   });
 });
 
+// Catalog tĩnh cho giao diện: sinh trực tiếp từ README.md nên không bao giờ lệch nội dung.
+// `searchableText` chỉ hữu ích phía máy chủ nên được lược bỏ khỏi payload.
+app.get('/exercises.json', (_request, response) => {
+  response.set('Cache-Control', 'public, max-age=300');
+  response.json(exercises.map(({ searchableText, ...exercise }) => exercise));
+});
+
 app.get('*', (_request, response, next) => {
   if (_request.path.startsWith('/api/')) return next();
+  if (_request.path.includes('.')) return next();
   response.sendFile(path.join(PUBLIC_DIR, 'index.html'));
 });
 
@@ -92,4 +106,10 @@ app.use((error, _request, response, _next) => {
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Rời Rạc đang chạy tại http://0.0.0.0:${PORT}`);
   console.log(`Đã nạp ${exercises.length} bài tập từ README.md`);
+  if (hasClientBuild) {
+    console.log('Giao diện: React (client/dist).');
+  } else {
+    console.log('Giao diện: bản vanilla cũ trong public/.');
+    console.log('→ Chạy "npm install:client && npm run build" để dùng giao diện React mới.');
+  }
 });
